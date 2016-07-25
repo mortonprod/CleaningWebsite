@@ -3,11 +3,11 @@ var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var tsProject = ts.createProject('App/tsconfig.json');
 var nodeLocation = "../node_modules/**"
-var finalDeploy = "AppDeploy"
-var systAng2 = "App/systemjs.config.js"
+var finalDeploy = "./AppDeploy"
+var systAng2 = "./App/systemjs.config.js"
 var htmlString = "App/**/*.html"
 var tsString = "App/**/*.ts"
-var baseString = "App"; ///This is the directory which you should begin to build file structure in dest. 
+var baseString = "./App"; ///This is the directory which you should begin to build file structure in dest. 
 ///TODO:Does not copy all files at once??? It also appears to take some time so you need to re run this a few times.
 gulp.task("scriptsNStyles", function(){
     gulp.src([
@@ -41,11 +41,13 @@ gulp.task('moveHtml', function () {
 });
 
 gulp.task('moveAng2Setup', function () {
+    gulp.dest(finalDeploy)
     gulp.src([
         systAng2
-    ], { base: "." })
+    ], { base: baseString })
         .pipe(gulp.dest(finalDeploy));
 });
+gulp.task('default', ['moveHtml']);
 
 gulp.watch(systAng2, function () {
     gulp.run('moveAng2Setup');

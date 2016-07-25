@@ -1,4 +1,4 @@
-﻿///Need to direct our compiled javascript models from node_module to AppDeploy versions.//////
+﻿///Need to direct our compiled javascript models from node_module to AppDeploy versions.////
 (function (global) {
     // map tells the System loader where to look for things
     var map = {
