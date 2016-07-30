@@ -1,2 +1,39 @@
-﻿body {
+﻿@keyframes sweep {
+    0% {
+        transform: rotate(30deg)
+    }
+    50% {
+        transform: rotate(-30deg)
+    }
+    100% {
+        transform: rotate(30deg)
+    }
+
+
+}
+div {
+    width:100px;
+    height:100px;
+    transition:2s ease-in-out;
+}
+
+
+.sweep {
+    position:absolute;
+    margin:0;
+    padding:0;
+    top:60px;
+    left:30px; 
+    height:20%;
+    width:auto;
+    right:auto;
+    bottom:auto;
+    z-index:1;
+    animation: sweep 0.5s infinite;
+}
+
+.test {
+    width:100px;
+    height:100px;
+    background-color:red;
 }
