@@ -1,1 +1,1 @@
-﻿
+﻿export * from './cleanFloor.component';

@@ -1,1 +1,1 @@
-﻿
+﻿export * from './sqr.component';
