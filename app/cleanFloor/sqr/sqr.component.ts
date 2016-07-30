@@ -1,18 +1,24 @@
 ﻿import { Component } from '@angular/core';
-import { AppState } from '../app.service';
+import { AppState } from '../../app.service';
 
 @Component({
-    selector: 'cleanFloor',  // <home></home>
+    selector: 'sqr',  
     providers: [
     ],
     directives: [
     ],
     pipes: [],
-    styleUrls: ['./cleanFloor.style.css'],
-    templateUrl: './cleanFloor.template.html'
+    styleUrls: ['./sqr.style.css'],
+    templateUrl: './sqr.template.html'
 })
 
-export class cleanFloor {
+export class sqr {
+    color = "red";
+    width = "100px";
+    height = "100px";
+    left = "100px";
+    top = "100px";
+
     // Set our default values
     localState = { value: '' };
     // TypeScript public modifiers
@@ -21,7 +27,7 @@ export class cleanFloor {
     }
 
     ngOnInit() {
-        console.log('hello `cleanFloor` component');
+        console.log('hello `sqr` component');
         // this.title.getData().subscribe(data => this.data = data);
     }
 
@@ -29,6 +35,15 @@ export class cleanFloor {
         console.log('submitState', value);
         this.appState.set('value', value);
         this.localState.value = '';
+    }
+    setColor(color:string) {
+        this.color = color;
+    }
+    setDimensions(left: string, top: string, width: string, height: string) {
+        this.left = left;
+        this.top = top;
+        this.width = width;
+        this.height = height;
     }
 
 }
