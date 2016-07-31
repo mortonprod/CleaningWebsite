@@ -4,7 +4,7 @@
         This is the same reason you can not update the style background of sqr from here. 
         To do this you must change a variable in sqr which will update the style from sqrs OWN style sheets. 
 -->
-<!--<img class="sweep">-->
+<img [ngClass]="{'sweep':isSweep}" src="../../assets/img/broomCrop.png" [style.left]="imgPos[0]" [style.top]="imgPos[1]">
 <sqr (click)="click()"> ></sqr>
 <sqr (click)="click()"> ></sqr>
 <sqr (click)="click()"> ></sqr>

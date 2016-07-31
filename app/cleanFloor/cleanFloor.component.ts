@@ -13,8 +13,12 @@ import { sqr } from './sqr';
 })
 
 export class cleanFloor implements AfterViewInit {
-    private xDiv = 4;
-    private yDiv = 6;
+    xDiv = 4;
+    yDiv = 6;
+    pos = new Array<Array<string>>();
+    cleanNum = 5;
+    imgPos = new Array<string>();
+    isSweep = false;
     @ViewChildren(sqr) sqrList: QueryList<sqr>;
     // Set our default values
     localState = { value: '' };
@@ -43,8 +47,36 @@ export class cleanFloor implements AfterViewInit {
         //this.appState.set('value', value);
         //this.localState.value = '';
     }
+    ///TODO:Note all async calls are all made at once.
+    ///TODO:All asynchronous call must take into account the timing of css. There transitions are all 1s.
     click() {
+        let wait = 1000;
+        let time = 3000;
         this.init();
+        ///Wait some time before you start.
+        setTimeout(() => {
+            for (let i = 1; i < this.cleanNum; i++) {
+                let randNum = Math.floor(Math.random() * this.sqrList.length);
+                ///Expose dirty sqr. Takes a second to expose.
+                setTimeout((i) => {///time=>3,6,9
+                    this.sqrList.toArray()[randNum].setOpacity(1);
+                }, (time*i));
+                ///Change the position after a second.
+                setTimeout((i) => {///time=>4,7,10
+                    this.imgPos = this.pos[randNum];
+                    console.log("ImgPos: " + this.imgPos)
+                }, (time * i)+1000);
+                ///After 1s after the call to move the animation should be in the right position.
+                setTimeout((i) => {///time=>5,8,11
+                    this.isSweep = true;
+                    this.sqrList.toArray()[randNum].setOpacity(0);
+                }, (time * i) + 2000);
+                ///Stop sweep after another second and in time to begin to expose another mud sqr.
+                setTimeout((i) => {//time=>6,9,12
+                    this.isSweep = false;
+                }, (time * i) + time);
+            }
+        }, wait)
     }
     init() {
         let fracWidthCon = 100 / this.xDiv;
@@ -62,6 +94,7 @@ export class cleanFloor implements AfterViewInit {
                 color1 = color2;
                 color2 = colorTemp;
             }
+            this.pos.push([fracWidthCon * xPos + "%", fracHeightCon * yPos + "%"]);
             sqr.setDimensions(fracWidthCon * xPos + "%", fracHeightCon * yPos + "%", fracWidthCon + "%", fracHeightCon + "%")
             if (xPos % 2 === 0) {
                 sqr.setColor(color1);
