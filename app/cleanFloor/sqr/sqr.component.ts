@@ -18,6 +18,7 @@ export class sqr {
     height = "100px";
     left = "100px";
     top = "100px";
+    opacity = 0;
 
     // Set our default values
     localState = { value: '' };
@@ -44,6 +45,9 @@ export class sqr {
         this.top = top;
         this.width = width;
         this.height = height;
+    }
+    setOpacity(opacity) {
+        this.opacity = opacity
     }
 
 }
