@@ -1,13 +1,19 @@
 import { WebpackAsyncRoute } from '@angularclass/webpack-toolkit';
 import { RouterConfig } from '@angular/router';
-import { Home } from './home';
+import { mainPage } from './mainPage';
+import { about } from './mainPage/about';
+import { cleanCarousel } from './mainPage/cleanCarousel';
+import { booking } from './mainPage/booking';
+import { cleanFloor } from './cleanFloor';
+
 //import { NoContent } from './no-content';
 
 import { DataResolver } from './app.resolver';
 
 export const routes: RouterConfig = [
-  { path: '',      component: Home }
-  //{ path: 'home',  component: Home },
+    { path: 'about', component: about },
+    { path: 'cleanCarousel', component: cleanCarousel },
+    { path: 'booking', component: booking },
   //// make sure you match the component type string to the require in asyncRoutes
   //{ path: 'about', component: 'About',
   //  resolve: {
@@ -19,7 +25,7 @@ export const routes: RouterConfig = [
   //  children: [
   //    { path: '', component: 'Index' }  // must be included
   //  ]},
-  //{ path: '**',    component: NoContent },
+  { path: '**',    component: mainPage }
 ];
 
 // Async load a component using Webpack's require with es6-promise-loader and webpack `require`
