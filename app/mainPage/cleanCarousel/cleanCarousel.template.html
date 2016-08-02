@@ -1,0 +1,5 @@
+﻿<carousel [interval]="myInterval" [noWrap]="noWrapSlides">
+    <slide *ngFor="let slidez of slides; let index=index" [active]="slidez.active">
+        <img [src]="slidez.image" style="margin:auto;">
+    </slide>
+</carousel>
