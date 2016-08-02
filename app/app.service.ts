@@ -1,6 +1,6 @@
 ﻿import { Injectable,OnInit } from '@angular/core';
 import { HmrState } from 'angular2-hmr';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { tokenNotExpired } from 'angular2-jwt';
 ///TODO:Must use conEmu to git command is available
@@ -29,7 +29,7 @@ export class facebookService implements OnInit {
 }
 
 export class job {
-    constructor(public name: string, public date: string, public timeStart: string, public timeEnd: string) { }
+    constructor(id: number, name: string, minute: number,hour: number,day: number,month: number, year: number) { }
 }
 
 @Injectable()
@@ -42,9 +42,22 @@ export class jobsService {
             .map(this.extractData)
             .catch(this.handleError);
     }
+    addJob(job: job): Observable<job> {
+        let body = JSON.stringify(job);
+        console.log("body: " + body)
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.jobsUrl, body, options)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
     ///TODO: This function will change from json form to javascript object?
     private extractData(res: Response) {
+        ///Body defined by first {} in json file
         let body = res.json();
+        console.log("body.data: " + JSON.stringify(body.data))
+        ///TODO:Note the body.data accesses the data field in the json file.
         return body.data || {};
     }
     private handleError(error: any) {
@@ -61,29 +74,29 @@ export class jobsService {
 @Injectable()
 export class authService {
     // Configure Auth0
-    lock = new Auth0Lock('CxGeOInKAPUJpvxuKsfEyGAlNNeXGSgh', 'mortonprod.eu.auth0.com', {});
+   // lock = new Auth0Lock('CxGeOInKAPUJpvxuKsfEyGAlNNeXGSgh', 'mortonprod.eu.auth0.com', {});
 
     constructor() {
         // Add callback for lock `authenticated` event
-        this.lock.on("authenticated", (authResult) => {
-            localStorage.setItem('id_token', authResult.idToken);
-        });
+        //this.lock.on("authenticated", (authResult) => {
+        //    localStorage.setItem('id_token', authResult.idToken);
+        //});
     }
 
     public login() {
         // Call the show method to display the widget.
-        this.lock.show();
+     //   this.lock.show();
     };
 
     public authenticated() {
         // Check if there's an unexpired JWT
         // This searches for an item in localStorage with key == 'id_token'
-        return tokenNotExpired();
+       // return tokenNotExpired();
     };
 
     public logout() {
         // Remove token from localStorage
-        localStorage.removeItem('id_token');
+    //    localStorage.removeItem('id_token');
     };
 }
 
