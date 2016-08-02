@@ -1,4 +1,4 @@
-﻿<h1 (click)="getJobs()">Dates</h1>
+﻿<h1 (click)="getJobs()">What date and time would you like?</h1>
 <ul>
     <li *ngFor="let job of jobs">
         {{job.name}}
@@ -6,6 +6,7 @@
 </ul>
 <datepicker (dateChange)="dateChange($event)"></datepicker>
 <cleantimepicker (timeChange)="timeChange($event)"></cleantimepicker>
+<pre class="alert alert-info">Your selection: {{hour}}/{{minutes}} {{amOrPM}} on {{day}}/{{month}}/{{year}} </pre>
 <button type="button" class="btn btn-primary" (click)="submit()">
     Submit
 </button>
