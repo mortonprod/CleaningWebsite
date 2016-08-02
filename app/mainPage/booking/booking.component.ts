@@ -21,16 +21,18 @@ export class booking implements OnInit {
     day: number;
     month: number;
     year: number;
-    constructor(private jbServ: jobsService) {
-    }
-    ngOnInit() {
-    }
+    amOrPM = "PM";
+    constructor(private jbServ: jobsService) {}
+    ngOnInit() {}
     getJobs() {
-        this.jbServ.getJobs().subscribe(jobs => this.jobs = jobs, error => this.error = <any>error);
+        ///getjobs() will return map and catch which return date for you to subscribe to.
+        /// output => this.jobs = =output : output is th return value of the function in map. 
+        ///Same idea with error. 
+        this.jbServ.getJobs().subscribe(output => this.jobs = output, output => this.error = <any>output);
     }
     timeChange(event) {
-        this.hour = event[1];
         this.minutes = event[0];
+        this.hour = event[1];
         console.log(this.minutes + " " + this.hour);
     }
     dateChange(event) {
@@ -42,7 +44,8 @@ export class booking implements OnInit {
     submit() {
         console.log("submit");
         let job = { "id":1,"name": "me", "minute": this.minutes, "hour": this.hour, "day": this.day,"month": this.month,"year": this.year }
-        this.jbServ.addJob(job).subscribe(jobs => this.jobs.push(job),error => this.error = <any>error);
-        }
+        /// jbServ.addJob(job) : This part will store the value.
+        ///Subscribe is to update the jobs after they have been stored. Same as above.
+        this.jbServ.addJob(job).subscribe(output => this.jobs.push(output),output => this.error = <any>output);
     }
 }
