@@ -1,0 +1,10 @@
+﻿{
+  "files": [
+    "src/ts/server.ts",
+    "src/ts/user.ts"
+  ],
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "target": "es5"
+  }
+}
