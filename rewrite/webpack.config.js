@@ -2,17 +2,11 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');///Does not include app entry so not very useful.No app entry point. Only once used.
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
-var locals = {
-    routes: [
-        '/',
-        '/webdevelopment',
-        '/webdevelopment/blogcreation',
-
-    ]
-}
 var config = {
     entry: {
-        app: ['./src/indexEntry.js'],
+        css: ['./src/cssEntry.js'],
+        client: ['./src/clientEntry.js'],
+        server: ['./src/serverEntry.js']
 
     },
     plugins: [
@@ -24,10 +18,10 @@ var config = {
         filename: '[name].js',
         libraryTarget: 'umd' // Need this for static site generation.
     },
-    resolve: {
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+    //resolve: {
+    //    extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
 
-    },
+    //},
     module: {
         loaders: [
             {
