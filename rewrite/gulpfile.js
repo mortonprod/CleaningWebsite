@@ -14,10 +14,21 @@ gulp.task("default", function () {
         .js.pipe(gulp.dest("dist"));
 });
 
+gulp.task('move', ['moveVendor','movePug'], function () {
+});
 
-gulp.task('move', function () {
+gulp.task('movePug', function () {
     gulp.src([
-        "src/vendor/**", "src/pug/**"
+        "src/pug/**"
+    ], { base: "src" })
+        .pipe(gulp.dest('dist/public'));
+});
+
+
+
+gulp.task('moveVendor', function () {
+    gulp.src([
+        "src/vendor/**"
     ], { base: "src" })
         .pipe(gulp.dest('dist'));
 });
