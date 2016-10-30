@@ -1,25 +1,32 @@
-﻿var express = require('express');
+﻿/// <reference path="../../typings/index.d.ts" />
+var express = require('express');
 var path = require('path');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('./User');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+var User = require('./user');
 var app = express();
 ///Set location of files to server to client
-app.use(express.static('public'));
+app.use(express.static('pug'));
 ///Populate req.cookies. 
-app.use(express.cookieParser());
+app.use(cookieParser());
 ///Populate req.body
-app.use(express.bodyParser());
+app.use(bodyParser());
 ///Create session middleware with the given options
-app.use(express.session({ secret: 'keyboard cat' }));
+app.use(session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 ///This is need to setup a session with passport
 app.use(passport.session());
+///Set the engine to produce the html views from
 app.set('view engine', 'pug');
+///Set where we look for views
+app.set('views', __dirname + '/pug');
 app.get('/', function (req, res) {
     ///SQL database code
     ///If signed in:
-    res.render('../index', { customerName: 'TestCustomer', message: 'Welcome back' });
+    res.render('index', { customerName: 'TestCustomer', message: 'Welcome back' });
     ///else(not signed in)
 
 });
