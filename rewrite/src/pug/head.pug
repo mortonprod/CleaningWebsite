@@ -10,8 +10,30 @@
   link(href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css")
   link(href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css")
   link(href="site.css" rel="stylesheet")
+  script(src="vendor/jqBootstrapValidation.js")
+  script(src="client.js")
   meta(property="og:url" content="http://www.your-domain.com/your-page.html")
   meta(property="og:type" content="website")
   meta(property="og:title" content="Balloch cleanning business")
   meta(property="og:description" content="Your description")
   meta(property="og:image" content="http://www.your-domain.com/path/image.jpg")
+
+
+  script(type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js")
+  script(type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js")
+  link(rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css")
+  script(type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js")
+  link(rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css")
+  ///isInvalid and custom will query a SQL database function to setup the date time picker.
+  script.
+    $(function() {
+      $('input[name="daterange"]').daterangepicker({
+          timePicker: true,
+          timePickerIncrement: 15,
+          locale: {
+              format: 'DD/MM/YYYY h:mm A'
+          },
+          isInvalidDate: function(date) { return date.day() == 0 || date.day() == 6 },
+          isCustomDate: function(date) { return ["cssClassName"] }
+      });
+    });
