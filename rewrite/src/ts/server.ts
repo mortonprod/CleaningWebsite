@@ -9,7 +9,7 @@ var session = require('express-session');
 var User = require('./user');
 var app = express();
 ///Set location of files to server to client
-app.use(express.static('pug'));
+app.use(express.static(__dirname + '/public'));
 ///Populate req.cookies. 
 app.use(cookieParser());
 ///Populate req.body
@@ -22,7 +22,7 @@ app.use(passport.session());
 ///Set the engine to produce the html views from
 app.set('view engine', 'pug');
 ///Set where we look for views
-app.set('views', __dirname + '/pug');
+app.set('views', __dirname + '/public/pug');
 app.get('/', function (req, res) {
     ///SQL database code
     ///If signed in:
