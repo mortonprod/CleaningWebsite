@@ -1,14 +1,10 @@
 ﻿var gulp = require('gulp');
 var ts = require("gulp-typescript");
 var tsProject = ts.createProject("tsconfig.json");
-///var webpack = require('webpack-stream');
-///gulp.task('default', function () {
-///    return gulp.src('src/indexEntry.js')
-///        .pipe(webpack(require('./webpack.config.js')))
-///        .pipe(gulp.dest('dist/'));
-///});
 
-gulp.task("default", function () {
+///@function default
+/// This will transpile the server code, move vendor code, then pug files
+gulp.task("default", ['move'], function () {
     return tsProject.src()
         .pipe(tsProject())
         .js.pipe(gulp.dest("dist"));
@@ -30,6 +26,6 @@ gulp.task('moveVendor', function () {
     gulp.src([
         "src/vendor/**"
     ], { base: "src" })
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('dist/public'));
 });
 
