@@ -5,8 +5,7 @@ var webpack = require('webpack');
 var config = {
     entry: {
         css: ['./src/cssEntry.js'],
-        client: ['./src/clientEntry.js'],
-        server: ['./src/serverEntry.js']
+        client: ['./src/clientEntry.js']
 
     },
     plugins: [
@@ -14,7 +13,7 @@ var config = {
     ],
 
     output: {
-        path: './dist',
+        path: './dist/public',
         filename: '[name].js',
         libraryTarget: 'umd' // Need this for static site generation.
     },
