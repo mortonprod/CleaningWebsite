@@ -26,7 +26,7 @@ app.set('views', __dirname + '/public/pug');
 app.get('/', function (req, res) {
     ///SQL database code
     ///If signed in:
-    res.render('index', { customerName: 'TestCustomer', message: 'Welcome back' });
+    res.render('index', { name: 'Alex'});
     ///else(not signed in)
 
 });
