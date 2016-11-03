@@ -10,6 +10,7 @@ var session = require('express-session');
 var User = require('./user');
 var app = express();
 var mysql = require('mysql');
+var nodemailer = require('nodemailer');
 var connection = mysql.createConnection({
     host: 'localhost',
     port: '3306',
@@ -92,7 +93,7 @@ app.set('views', __dirname + '/public/pug');
 app.get('/', function (req, res) {
     if (req.session && req.session.passport && req.session.passport.user) {
         console.log("req " + JSON.stringify(req.session.passport.user));
-        res.render('index', { name: req.session.passport.user.email });
+        res.render('index', { name: req.session.passport.user.name });
     } else {
         res.render('index');
     }
@@ -137,6 +138,33 @@ app.post('/login', passport.authenticate('login', {
     successRedirect: '/',
     failureRedirect: '/login'
 }));
+
+app.post('/contact', function (req, res) {
+    console.log("Contact information " + req)
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'atticusfbf@gmail.com', 
+            pass: '975975975'
+        }
+    });
+    var mailOptions = {
+        from: 'atticusfbf@gmail.com', // sender address
+        to: 'mortonprod@gmail.com', // list of receivers
+        subject: 'Email Example', // Subject line
+        text: "I sent this from node." //, // plaintext body
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+            res.json({ yo: 'error' });
+        } else {
+            console.log('Message sent: ' + info.response);
+            res.json({ yo: info.response });
+        };
+    });
+});
+
 
 app.set('port', process.env.PORT || 3000);
 
