@@ -90,8 +90,12 @@ app.set('view engine', 'pug');
 ///Set where we look for views
 app.set('views', __dirname + '/public/pug');
 app.get('/', function (req, res) {
-    console.log("req " + JSON.stringify(req.session.passport.user));
-    res.render('index', { name : req.session.passport.user.email});
+    if (req.session && req.session.passport && req.session.passport.user) {
+        console.log("req " + JSON.stringify(req.session.passport.user));
+        res.render('index', { name: req.session.passport.user.email });
+    } else {
+        res.render('index');
+    }
     ///else(not signed in)
 
 });
@@ -102,6 +106,11 @@ app.get('/login', function (req, res) {
     res.render('login');
     ///else(not signed in)
 
+});
+
+app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect("/");
 });
 
 
