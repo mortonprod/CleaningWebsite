@@ -12,10 +12,10 @@ var app = express();
 var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
-    port:'3306',
+    port: '3306',
     user: 'root',
     password: 'root',
-    database:'cleanBase'
+    database: 'cleanBase'
 });
 ///@function serial...
 /// This is needed after authentication, when the cookie is provided.
@@ -32,7 +32,7 @@ passport.deserializeUser(function (user, done) {
 /// Usernamefield and passwordField is what the field is called from request. 
 /// passReqToCallback is used to pass the address etc not just username and password.
 /// Done is used is to specify success or failure to the router callback in app.post signup.
-passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true  },
+passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true },
     function (req, email, password, done) {
         console.log("authentication signup");
         console.log("email: " + email);
@@ -49,6 +49,29 @@ passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField
         });
     }
 ));
+
+passport.use('login', new LocalStrategy({ usernameField: 'email', passwordField: 'password' },
+    function (email, password, done) {
+        console.log("email: " + email);
+        console.log("password: " + password);
+        var user = {};
+        var insertQuery = "SELECT FirstName, SecondName, email, Password FROM Users WHERE email = '" + email + "' AND Password = '" + password + "'";
+        console.log(insertQuery);
+        connection.query(insertQuery, function (err, rows) {
+            if (err) {
+                console.log("Login error = " + err);
+                return done(null, false);
+            } else {
+                console.log("rows " + JSON.stringify(rows));
+                user.name = rows[0].FirstName + " " + rows[0].SecondName;
+                user.email = rows[0].email;
+                console.log("Login user " + JSON.stringify(user));
+                return done(null, user);
+            }
+        });
+    }
+));
+
 
 ///Set location of files to server to client
 app.use(express.static(__dirname + '/public'));
@@ -67,9 +90,8 @@ app.set('view engine', 'pug');
 ///Set where we look for views
 app.set('views', __dirname + '/public/pug');
 app.get('/', function (req, res) {
-    ///SQL database code
-    ///If signed in:
-    res.render('index', { name: 'Alex'});
+    console.log("req " + JSON.stringify(req.session.passport.user));
+    res.render('index', { name : req.session.passport.user.email});
     ///else(not signed in)
 
 });
@@ -77,7 +99,7 @@ app.get('/', function (req, res) {
 app.get('/login', function (req, res) {
     ///SQL database code
     ///If signed in:
-    res.render('login', { name: 'Alex' });
+    res.render('login');
     ///else(not signed in)
 
 });
@@ -101,25 +123,8 @@ app.get('/signup', function (req, res) {
 app.post('/signup', passport.authenticate('signup', { successRedirect: '/', failureRedirect: '/signup', failureFlash: false }));
 
 /// @function login 
-/// Passport local login function. Local strategy will pass username password to callback function. The cb function will then call done().
-/// This will be used when authenticate local is used as a route.
-passport.use(new LocalStrategy(
-    function (username, password, done) {
-        User.findUser({ username: username }, function (err, user) {
-            if (err) { return done(err); }
-            if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
-            }
-            if (!user.validPassword(password)) {
-                return done(null, false, { message: 'Incorrect password.' });
-            }
-            return done(null, user);
-        });
-    }
-));
-/// @function login 
 /// Passport local login route
-app.post('/login', passport.authenticate('local', {
+app.post('/login', passport.authenticate('login', {
     successRedirect: '/',
     failureRedirect: '/login'
 }));
