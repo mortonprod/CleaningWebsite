@@ -4,12 +4,16 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
 var config = {
     entry: {
-        css: ['./src/cssEntry.js'],
-        client: ['./src/clientEntry.js']
+        contact: ['./src/ts/contact.ts'],
+        review: ['./src/ts/review.ts'],
+        user: ['./src/ts/user.ts'],
+        datetime: ['./src/ts/datetime.ts'],
+        global: ['./src/ts/global.ts']
 
     },
     plugins: [
-        new ExtractTextPlugin("site.css")
+        new ExtractTextPlugin("site.css"),
+        new webpack.optimize.CommonsChunkPlugin("commons.chunk.js")
     ],
 
     output: {
@@ -23,6 +27,7 @@ var config = {
     //},
     module: {
         loaders: [
+            { test: /\.css$/, loader: "style-loader!css-loader" },
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract(
