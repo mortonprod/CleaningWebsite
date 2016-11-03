@@ -4,10 +4,52 @@ var path = require('path');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var cookieParser = require('cookie-parser');
+var flash = require('connect-flash');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var User = require('./user');
 var app = express();
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host: 'localhost',
+    port:'3306',
+    user: 'root',
+    password: 'root',
+    database:'cleanBase'
+});
+///@function serial...
+/// This is needed after authentication, when the cookie is provided.
+/// Passport will serialize this then it will pass it to the callback function which then calls done.
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+    done(null, user);
+});
+/// @function signup
+/// This function is called from the signup post route. 
+/// Usernamefield and passwordField is what the field is called from request. 
+/// passReqToCallback is used to pass the address etc not just username and password.
+/// Done is used is to specify success or failure to the router callback in app.post signup.
+passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true  },
+    function (req, email, password, done) {
+        console.log("authentication signup");
+        console.log("email: " + email);
+        console.log("password: " + password);
+        console.log("req: " + req);
+        var newUserMysql = new Object();
+        newUserMysql.email = email;
+        newUserMysql.password = password; // use the generateHash function in our user model
+        var insertQuery = "INSERT INTO Users ( email, password ) values ('" + email + "','" + password + "')";
+        console.log(insertQuery);
+        connection.query(insertQuery, function (err, rows) {
+            newUserMysql.id = rows.insertId;
+            return done(null, newUserMysql);
+        });
+    }
+));
+
 ///Set location of files to server to client
 app.use(express.static(__dirname + '/public'));
 ///Populate req.cookies. 
@@ -19,6 +61,7 @@ app.use(session({ secret: 'keyboard cat' }));
 app.use(passport.initialize());
 ///This is need to setup a session with passport
 app.use(passport.session());
+app.use(flash())
 ///Set the engine to produce the html views from
 app.set('view engine', 'pug');
 ///Set where we look for views
@@ -31,11 +74,31 @@ app.get('/', function (req, res) {
 
 });
 
-const user = {
-    username: 'test-user',
-    password: 'test-password',
-    id: 1
-}
+app.get('/login', function (req, res) {
+    ///SQL database code
+    ///If signed in:
+    res.render('login', { name: 'Alex' });
+    ///else(not signed in)
+
+});
+
+
+app.get('/signup', function (req, res) {
+    ///SQL database code
+    ///If signed in:
+    res.render('signup', { name: 'Alex' });
+    ///else(not signed in)
+
+});
+/// @function signup 
+/// Get signup information and save using passport.
+/// The request is passed since authenticate is called inside function. 
+/// The callback success/failure is determined from the authenticate. 
+//app.post('/signup', function (req, res, next) {
+//    console.log("post signup");
+//    passport.authenticate('signup', { successRedirect: '/', failureRedirect: '/signup', failureFlash: true });
+//})
+app.post('/signup', passport.authenticate('signup', { successRedirect: '/', failureRedirect: '/signup', failureFlash: false }));
 
 /// @function login 
 /// Passport local login function. Local strategy will pass username password to callback function. The cb function will then call done().
