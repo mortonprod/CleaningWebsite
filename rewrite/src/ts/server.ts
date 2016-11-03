@@ -140,7 +140,7 @@ app.post('/login', passport.authenticate('login', {
 }));
 
 app.post('/contact', function (req, res) {
-    console.log("Contact information " + req)
+    console.log("Contact information " + req.body.name + "   " + req.body.email + "   " + req.body.message);
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -149,19 +149,20 @@ app.post('/contact', function (req, res) {
         }
     });
     var mailOptions = {
-        from: 'atticusfbf@gmail.com', // sender address
+        from: 'atticusfbf@gmail.com', // This does not do anything????
         to: 'mortonprod@gmail.com', // list of receivers
-        subject: 'Email Example', // Subject line
-        text: "I sent this from node." //, // plaintext body
+        subject: 'Cleaning customer ' + req.body.name, // Subject line
+        text: req.body.message + "\n" + "From: " + req.body.email //, // plaintext body
     };
     transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-            res.json({ yo: 'error' });
-        } else {
-            console.log('Message sent: ' + info.response);
-            res.json({ yo: info.response });
-        };
+//        if (error) {
+//            console.log(error);
+//            res.json({ yo: 'error' });
+//        } else {
+//            console.log('Message sent: ' + info.response);
+//            ///res.json({ yo: info.response });
+//        };
+        res.redirect("/");
     });
 });
 
