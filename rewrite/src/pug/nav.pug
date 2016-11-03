@@ -4,8 +4,8 @@
       button(type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
         span(class="sr-only") Toggle navigation 
           i(class="fa fa-bars")
-    if(name != "")
-      a(class="navbar-brand" href="/logout") logout
+    if(name)
+      a(class="navbar-brand" href="/logout") Logout
     else
       a(class="navbar-brand" href="/login") Login
     div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
