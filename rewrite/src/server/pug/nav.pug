@@ -1,0 +1,22 @@
+﻿nav(id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom")
+  div(class="container")
+    div(class="navbar-header page-scroll")
+      button(type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1")
+        span(class="sr-only") Toggle navigation 
+          i(class="fa fa-bars")
+    if(name)
+      a(class="navbar-brand" href="/logout") Logout
+    else
+      a(class="navbar-brand" href="/login") Login
+    div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+      ul(class="nav navbar-nav navbar-right")
+        li(class="hidden")
+          a(href="#page-top")
+        li(class="page-scroll")
+          a(href="#about") About
+        li(class="page-scroll")
+          a(href="#reviews") Reviews
+        li(class="page-scroll")
+          a(href="#contact") Contact
+        li(class="page-scroll")
+          a(href="#book") Book with us
