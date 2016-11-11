@@ -1,19 +1,19 @@
 ﻿'use strict';
-var HtmlWebpackPlugin = require('html-webpack-plugin');///Does not include app entry so not very useful.No app entry point. Only once used.
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
 var config = {
+    /**
+     * Entry for all client side code.
+     * @var {object} entry
+     */
     entry: {
-        contact: ['./src/ts/contact.ts'],
-        review: ['./src/ts/review.ts'],
-        user: ['./src/ts/user.ts'],
-        datetime: ['./src/ts/datetime.ts'],
-        global: ['./src/ts/global.ts']
+        contact: ['./src/client/index.tsx'],
+        vendor: ['react', 'react-dom', 'jquery', "react-dom", "redux-thunk", 'redux', 'react-redux']
 
     },
     plugins: [
         new ExtractTextPlugin("site.css"),
-        new webpack.optimize.CommonsChunkPlugin("commons.chunk.js")
+        new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
     ],
 
     output: {
@@ -36,21 +36,7 @@ var config = {
                     "css!postcss-loader!sass")
             },
             { test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery' },
-            { test: /\.tsx?$/, loader: "ts-loader" },
-            {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    'file?hash=sha512&digest=hex&name=[hash].[ext]'
-                    //'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false' To minimise images. Not working.
-                ]
-            },
-            { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-            { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-            { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-            { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-            { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
-
-
+            { test: /\.tsx?$/, loader: "ts-loader" }
         ]
     }
 };
