@@ -1,7 +1,9 @@
 ﻿{
   "files": [
     "./src/client/index.tsx",
-    "typings/index.d.ts"
+    "typings/index.d.ts",
+    "typingsMine/index.d.ts"
+
   ],
   "compilerOptions": {
     "noImplicitAny": true,
