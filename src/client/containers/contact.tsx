@@ -1,24 +1,20 @@
 ﻿///File contact - the link between the contact actions and presentation.
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import ContactPresentation from "../components/contactPresentation.tsx";
 import { sendMessage } from "../actions/contactAction.ts";
-interface state {
-}
 interface props {
     name: string,
     email: string,
     message: string,
     help: string,
-    sendingClass:string
+    sendingClass: string,
+    sendMessage:any
 }
-/**
- * Contact react component
- * @class
- */
-export default class Contact extends React.Component<props, state> {
-    constructor(props:any) {
+class Contact extends React.Component<props, {}> {
+    constructor(props: any) {
         super(props);
     }
     componentDidMount() {
@@ -27,18 +23,24 @@ export default class Contact extends React.Component<props, state> {
         return (
             <div className={this.props.sendingClass}>
                 <ContactPresentation name={this.props.name} email={this.props.email} message={this.props.message}
-                submitHandler={(form) => dispatch(sendMessage(form.name, form.email, form.message))}/>
+                    submitHandler={(form: { name: string, email: string, message: string }) => this.props.sendMessage(form.name, form.email, form.message)}/>
                 <p>{this.props.help} </p>
             </div>
         );
     }
 }
-/// @ function select - This will pass store from the provider and select parts of it then pass to the container component.
-/// IMPORTANT:Youd do not need to add store here for this to work.
-function select(store) {
+///This call back will get state from provider and map to component props.
+const mapStateToProps = (state: any, ownProps: any) => {
     return {
-        userAuthSession: store.userAuthSession
-    };
+        name: state.user.name
+    }
 }
-
-export default connect(select)(Contact);
+///This will link actions and link to props in component
+const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+    return {
+        sendMessage: bindActionCreators(sendMessage, dispatch)
+    }
+}
+///Need to specify connect(store, action<<Need this to use action in class)(object) 
+// injects increment and decrement
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);
