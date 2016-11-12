@@ -1,5 +1,5 @@
 ﻿import { ADD_PERSON } from "../actions/LoginSignupAction.ts";
-import "../polyFill/assignPolyFill.ts";
+import "../polyFill/assign.ts";
 const initialState = {
     people: [{
         name: "",
@@ -7,7 +7,7 @@ const initialState = {
         datesTime: [{}, {}]
     }]
 }
-export function customers(state = initialState, action) {
+export function customers(state = initialState, action:any) {
     switch (action.type) {
         case ADD_PERSON:
             return Object.assign({}, state, {
