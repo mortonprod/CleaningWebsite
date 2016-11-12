@@ -1,6 +1,4 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-/// <reference path="../../../../../node_modules/react-datetime/react-datetime.d.ts" />
-import * as React from 'react';
+﻿import * as React from 'react';
 import * as Datetime from "react-datetime";
 interface state {
 }
