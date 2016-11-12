@@ -4,8 +4,10 @@ import * as ReactDOMServer from 'react-dom/server'
 ///Get all pug file ready to render
 var indexPug = require("./pug/index.pug");
 ///Contains all the components we want to render.
-import {ContactRoot,store} from "../../client/index";
-var contactApp = React.createFactory(ContactRoot)
+import {store} from "../../client/index";
+import  Contact  from "../../client/containers/contact";
+
+var contactApp = React.createFactory(Contact)
 const preloadedState = store.getState();
 export function pages(router) {
     router.get('/', function (req: any, res: any) {

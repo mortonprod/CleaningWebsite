@@ -8,6 +8,6 @@ require(path.join(__dirname, './', 'contact'))(router);
 require(path.join(__dirname, './', 'pages'))(router);
 
 
-module.exports = function (app) {
+module.exports = function (app:any) {
     app.use('/', router);
 };

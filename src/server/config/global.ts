@@ -13,7 +13,9 @@ export default function global() {
     };
     var mailOptions = {
         from: 'atticusfbf@gmail.com', // This does not do anything????
-        to: 'mortonprod@gmail.com' // list of receivers
+        to: 'mortonprod@gmail.com', // list of receivers
+        subject: "",
+        text:""
     };
     return {
         con: con,

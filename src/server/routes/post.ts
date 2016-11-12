@@ -10,21 +10,20 @@ export function contact(router) {
             service: 'Gmail',
             auth: global().mail
         });
-
         global().mailOptions.subject = 'Cleaning customer ' + req.body.name;
         global().mailOptions.text = req.body.message + "\n" + "From: " + req.body.email;
         transporter.sendMail(global().mailOptions, function (error, info) {
 ///            res.redirect("/");
         });
     });
-    app.post('/facebooklogin', passport.authenticate('facebooklogin', {
+    router.post('/facebooklogin', passport.authenticate('facebooklogin', {
         successRedirect: '/',
         failureRedirect: '/loginfacebook'
     }));
-    app.post('/login', passport.authenticate('login', {
+    router.post('/login', passport.authenticate('login', {
         successRedirect: '/',
         failureRedirect: '/login'
     }));
-    app.post('/signup', passport.authenticate('signup', { successRedirect: '/', failureRedirect: '/signup', failureFlash: false }));
+    router.post('/signup', passport.authenticate('signup', { successRedirect: '/', failureRedirect: '/signup', failureFlash: false }));
 }
 

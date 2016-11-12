@@ -44,9 +44,9 @@ export default function passportStrategy() {
         callbackURL: "http://localhost:/"
     },
         function (accessToken, refreshToken, profile, cb) {
-            User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-                return cb(err, user);
-            });
+            //User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+            //    return cb(err, user);
+            //});
         }
     ));
     return passport;
