@@ -1,5 +1,4 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-import  * as React from 'react';
+﻿import  * as React from 'react';
 interface props {
     name: string,
     email: string,
@@ -11,11 +10,16 @@ export default class ContactPresentation extends React.Component<props, {}> {
     constructor(props: any) {
         super();
     }
+    refs: {
+        name: (HTMLInputElement),
+        email: (HTMLInputElement),
+        message: (HTMLInputElement)
+    }
     submitHandler() {
         var form = {
             name: this.refs.name.value,
             email: this.refs.email.value,
-            message: this.refs.password.value,
+            message: this.refs.message.value,
         }
         this.props.submitHandler(form);
     }
@@ -38,7 +42,7 @@ export default class ContactPresentation extends React.Component<props, {}> {
                     <div className="row control-group">
                         <div className="form-group col-xs-12 floating-label-form-group controls">
                         <label>Message</label>
-                        <textarea ref="message" value={this.props.message}  rows="5" className="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                        <textarea ref="message" value={this.props.message}  rows={5} className="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
                         </div>
                     </div>
                     <br/>
