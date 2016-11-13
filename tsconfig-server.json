@@ -1,0 +1,27 @@
+﻿{
+  "files": [
+    "./src/client/index.tsx",
+    "./typings/index.d.ts",
+    "./typingsMine/index.d.ts"
+  ],
+  "compilerOptions": {
+    "removeComments": true,
+    "noImplicitAny": false,
+    "target": "es5",
+    "jsx": "react",
+    "noEmitOnError": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "./src/client/__tests__/*-spec.ts",
+    "./src/client/__tests__/*-spec.tsx",
+    "**/*.pug",
+    "**/*.scss",
+    "**/*.css"
+  ]
+}
