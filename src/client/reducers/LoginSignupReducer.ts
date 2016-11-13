@@ -1,5 +1,5 @@
-﻿import { ADD_PERSON } from "../actions/LoginSignupAction.ts";
-import "../polyFill/assign.ts";
+﻿import { ADD_PERSON } from "../actions/LoginSignupAction";
+import "../polyFill/assign";
 const initialState = {
     people: [{
         name: "",

@@ -3,8 +3,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ContactPresentation from '../components/contactPresentation.tsx';
-import { sendMessage } from '../actions/contactAction.ts';
+import ContactPresentation from '../components/contactPresentation';
+import { sendMessage } from '../actions/contactAction';
 interface props {
     name: string,
     email: string,

@@ -2,7 +2,7 @@
 import * as passport from 'passport';
 import * as nodemailer from 'nodemailer'
 import  global  from "../config/global";
-export function contact(router) {
+export function post(router) {
 
     router.post('/contact', function (req, res) {
         console.log("Contact information " + req.body.name + "   " + req.body.email + "   " + req.body.message);
