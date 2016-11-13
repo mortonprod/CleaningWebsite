@@ -17,6 +17,7 @@
     "passport-facebook": "registry:dt/passport-facebook#1.0.3+20160316155526",
     "passport-local": "registry:dt/passport-local#0.0.0+20160316155526",
     "promise": "registry:dt/promise#7.1.1+20160602154553",
+    "pug": "registry:dt/pug#2.0.0-beta6+20160919072324",
     "react": "registry:dt/react#0.14.0+20161024223416",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
     "react-redux": "registry:dt/react-redux#4.4.0+20160908183346",
