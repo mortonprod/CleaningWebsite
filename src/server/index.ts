@@ -13,8 +13,8 @@ var app = express();
 
 ///Add all the different server side routes
 require('./routes/index')(app);
-
-app.use(express.static(path.join(__dirname + '/public')));
+console.log("Static :" + path.join(__dirname, "../..", "public"))
+app.use(express.static(path.join(__dirname,"../..", "public")));
 
 app.use(cookieParser());
 app.use(bodyParser());
