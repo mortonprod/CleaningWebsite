@@ -1,14 +1,15 @@
 ﻿import * as $ from "jquery";
 import Promise from "ts-promise";
+import actionNames from "./actionNames";
 export function sendMessage(name: string, email: string, message: string) {
     return (dispatch: any) => {
-        dispatch(sendingMessage(true));
+        dispatch(addSendingMessage(true));
         let helpMessage: Array<string> = validation(name, email, message);
         ///validation code here
         if (helpMessage === []) {
             dispatch(sendMessageToServer(name, email, message));
         } else {
-            dispatch(sendToStoreWithHelpMessage(name, email, message, helpMessage));
+            dispatch(addHelpMessage(helpMessage));
         }
         function validation(name: string, email: string, message: string) {
             let helpMessage: Array<string> = [];
@@ -37,47 +38,38 @@ function sendMessageToServer(name:string, email:string, message:string) {
         }).done(function (data) {
             if (data.error) {
                 console.log("add todo worked but error: ", data);
-                dispatch(sendToStoreWithHelpMessage(name, email, message, ["Error sending to server"]));
-                dispatch(sendingMessage(false));
+                dispatch(addHelpMessage(["Error sending to server"]));
+                dispatch(addSendingMessage(false));
             } else {
-                dispatch(sendToStoreWithHelpMessage(name, email, message));
-                dispatch(sendingMessage(false));
+                dispatch(addMessage(message));
+                dispatch(addSendingMessage(false));
             }
         }).fail(function (a, b, c, d) {
             console.log("actual failure: ", a, b, c, d)
-            dispatch(sendToStoreWithHelpMessage(name, email, message,["Error sending to server"]));
-            dispatch(sendingMessage(false));
+            dispatch(addHelpMessage(["Error sending to server"]));
+            dispatch(addSendingMessage(false));
         });
     }
 
 }
 
 ////////////////////////////////Action creators to update store.//////////////////////////////
-export const SEND_MESSAGE = 'SEND_MESSAGE';
-export const STORE_MESSAGE = 'STORE_MESSAGE';
-export const SENDING_MESSAGE = 'SENDING_MESSAGE';
-function sendingMessage(bool: boolean) {
+function addMessage(message:string) {
     return {
-        type: SENDING_MESSAGE,
-        sending:bool
+        type: actionNames().addMessage,
+        message
     }
 }
-
-
-function sendToStoreWithHelpMessage(name:string,email:string,message:string,helpMessage=["completed"]){
+function addHelpMessage(helpMessage = ["completed"]) {
     return {
-        type: SEND_MESSAGE,
-        name,
-        email,
-        message,
+        type: actionNames().addHelpMessage,
         helpMessage
     }
 }
 
-export function failMessage(name:string,email:string,message:string) {
+function addSendingMessage(bool: boolean) {
     return {
-        type: SENDING_MESSAGE,
-        contactLoad: true
+        type: actionNames().addSendingMessage,
+        sending:bool
     }
 }
-
