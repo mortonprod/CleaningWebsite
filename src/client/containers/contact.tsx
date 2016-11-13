@@ -9,30 +9,41 @@ interface props {
     name: string,
     email: string,
     message: string,
-    help: string,
-    sendingClass: string,
+    helpMessage: string,
+    sending: any,
     sendMessage:any
 }
 class Contact extends React.Component<props, {}> {
+    sendingClass=""
     constructor(props: any) {
         super(props);
     }
-    componentDidMount() {
+    componentWillUpdate() {
+        if (this.props.sending) {
+            this.sendingClass="sending"
+        } else {
+            this.sendingClass = ""
+        }
     }
     render() {
         return (
-            <div className={this.props.sendingClass}>
+            <div className={this.sendingClass}>
                 <ContactPresentation name={this.props.name} email={this.props.email} message={this.props.message}
                     submitHandler={(form: { name: string, email: string, message: string }) => this.props.sendMessage(form.name, form.email, form.message)}/>
-                <p>{this.props.help} </p>
+                <p>{this.props.helpMessage} </p>
             </div>
         );
     }
 }
 ///This call back will get state from provider and map to component props.
 const mapStateToProps = (state: any, ownProps: any) => {
+    console.log(JSON.stringify(state));
     return {
-        name: state.user.name
+        name: state.userReducer.name,
+        email: state.userReducer.email,
+        message: state.contactReducer.message,
+        helpMessage:state.contactReducer.helpMessage,
+        sending:state.contactReducer.sendingMessage
     }
 }
 ///This will link actions and link to props in component
