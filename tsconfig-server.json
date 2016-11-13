@@ -14,7 +14,9 @@
     "emitDecoratorMetadata": true
   },
   "include": [
-    "./src/**/*"
+    "./src/client/**/*",
+    "./src/server/**/*"
+
   ],
   "exclude": [
     "node_modules",
