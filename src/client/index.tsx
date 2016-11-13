@@ -15,11 +15,13 @@ import Contact from "./containers/contact";
 //)(createStore);
 //
 //const store = createStoreWithMiddleware(RootReducer, window.__PRELOADED_STATE__);
+
+
 reactDOM.render(
     <Provider store={store()} >
         <Contact/>
     </Provider>,
-    document.getElementById("contact")
+    document.getElementById("react-contact")
 );
 
 
