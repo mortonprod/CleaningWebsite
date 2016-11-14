@@ -18,7 +18,7 @@ export default function passportStrategy() {
     passport.deserializeUser(function (user, done) {
         done(null, user);
     });
-    passport.use('local', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true },
+    passport.use('login', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true },
         function (req, email, password, done) {
             db.getUserFromDB(email, password)
             .then(function (user) {
