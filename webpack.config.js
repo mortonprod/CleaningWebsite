@@ -8,6 +8,7 @@ var config = {
      */
     entry: {
         contact: ['./src/client/index.tsx'],
+        smoothTransition: ['./src/client/utils/smoothTransition.ts'],
         vendor: ['react', 'react-dom', 'jquery', "react-dom", "redux-thunk", 'redux', 'react-redux']
 
     },
