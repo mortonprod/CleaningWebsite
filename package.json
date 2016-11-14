@@ -10,7 +10,8 @@
   "author": "Alexander Morton <mortonprod@gmail.com>",
   "homepage": "https://github.com/mortonprod/CleaningWebsite",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node dist/src/server/index.js" 
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -35,6 +36,7 @@
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
+    "smoothstate": "^0.7.2",
     "ts-promise": "^0.3.4"
   },
   "devDependencies": {
