@@ -1,4 +1,5 @@
-﻿import 'bootstrap/dist/css/bootstrap.css';
+﻿import * as $ from "jquery";
+import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import "./sass/site.scss";
 import * as React from 'react';
@@ -18,26 +19,26 @@ import Signup from "./containers/signup";
 //
 //const store = createStoreWithMiddleware(RootReducer, window.__PRELOADED_STATE__);
 
+$(document).ready(function () {
+    reactDOM.render(
+        <Provider store={store()} >
+            <Contact/>
+        </Provider>,
+        document.getElementById("react-contact")
+    );
 
-reactDOM.render(
-    <Provider store={store()} >
-        <Contact/>
-    </Provider>,
-    document.getElementById("react-contact")
-);
-
-reactDOM.render(
-    <Provider store={store()} >
-        <Login/>
-    </Provider>,
-    document.getElementById("react-login")
-);
-reactDOM.render(
-    <Provider store={store()} >
-        <Signup/>
-    </Provider>,
-    document.getElementById("react-signup")
-);
-
+//    reactDOM.render(
+//        <Provider store={store()} >
+//            <Login/>
+//        </Provider>,
+//        document.getElementById("react-login")
+//    );
+//    reactDOM.render(
+//        <Provider store={store()} >
+//            <Signup/>
+//        </Provider>,
+//        document.getElementById("react-signup")
+//    );
+});
 
 
