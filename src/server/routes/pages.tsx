@@ -33,6 +33,7 @@ const signupApp = (
 
 //var contactApp = React.createFactory(initialContact)
 const preloadedState = store().getState();
+console.log("preloadState: " + preloadedState + " json: " + JSON.stringify(preloadedState))
 export function pages(router) {
     router.get('/', function (req: any, res: any) {
         let contactString = ReactDOMServer.renderToString(contactApp);

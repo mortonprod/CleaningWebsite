@@ -3,6 +3,9 @@
 }
 declare interface JQuery {
     smoothState(target: Object): any;
+    affix(target: Object): any;
+    scrollspy(target: Object): any;
+
 }
 
 

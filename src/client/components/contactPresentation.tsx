@@ -26,7 +26,7 @@ export default class ContactPresentation extends React.Component<props, {}> {
 
     render() {
         return (
-                <form name="sentMessage" id="contactForm" novalidate>
+                <form name="sentMessage" id="contactForm" noValidate>
                     <div className="row control-group">
                         <div className="form-group col-xs-12 floating-label-form-group controls">
                         <label>Name</label>

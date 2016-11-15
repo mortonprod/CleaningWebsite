@@ -1,4 +1,5 @@
-﻿import { combineReducers } from 'redux';
+﻿/// <reference path="../../../typingsMine/index.d.ts" />
+import { combineReducers } from 'redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import DateTimes from "../utils/datetime";
@@ -142,8 +143,6 @@ function signupReducer(state = initialState.contact, action: any) {
             return state
     }
 }
-
-
 
 const RootReducer = combineReducers({
     userReducer,

@@ -37,7 +37,7 @@
 }
 
 body {
-    &.m-scene {
+    .m-scene {
         /** Basic styles for an animated element */
         .scene_element {
             animation-duration: 0.5s;

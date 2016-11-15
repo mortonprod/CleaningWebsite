@@ -2,6 +2,7 @@
   "files": [
     "./src/client/index.tsx",
     "./src/client/utils/smoothTransition.ts",
+    "./src/client/utils/pageScroll.ts",
     "./typings/index.d.ts",
     "./typingsMine/index.d.ts"
 

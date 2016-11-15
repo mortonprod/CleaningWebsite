@@ -1,19 +1,32 @@
 ﻿import * as $ from "jquery";
 import "smoothstate";
-var $body = $('html, body'); 
-var content = $('#main').smoothState({
-    // onStart runs as soon as link has been activated
+
+var $page = $('#main'),
+options = {
+    debug: true,
+    prefetch: true,
+    cacheLength: 2,
+    forms: 'form',
+    ///Run once the page is about to go
     onStart: {
-
-        // Set the duration of our animation
-        duration: 250,
-
-        // Alterations to the page
-        render: function () {
-
-            // Quickly toggles a class and restarts css animations
-            content.toggleAnimationClass('is-exiting');
-            $body.animate({ 'scrollTop': 0 });
+        duration: 500, // Duration of our animation
+        render: function ($container:any) {
+            // Add your CSS animation reversing class
+            $container.addClass('is-exiting');
+            // Restart your animation
+            smoothState.restartCSSAnimations();
         }
+    },
+    ///Called once the old animation is ready and the new content is ready
+    onReady: {
+        duration: 0,
+        render: function ($container: any, $newContent:any) {
+            // Remove your CSS animation reversing class
+            $container.removeClass('is-exiting');
+            //Render the new html page.
+            $container.html($newContent);
+        }
+
     }
-}).data('smoothState'); // makes public methods available
+},
+smoothState = $page.smoothState(options).data('smoothState');

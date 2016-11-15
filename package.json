@@ -11,16 +11,19 @@
   "homepage": "https://github.com/mortonprod/CleaningWebsite",
   "scripts": {
     "test": "jest",
-    "start": "node dist/src/server/index.js" 
+    "start": "node dist/src/server/index.js"
   },
   "dependencies": {
+    "affix": "^1.0.15",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
-    "jquery": "^3.1.1",
+    "jquery": "^2.2.4",
+    "jquery-ui": "^1.12.1",
+    "jquery-ui-bundle": "^1.11.4",
     "moment": "^2.15.2",
     "mysql": "^2.11.1",
     "ng2-bootstrap": "^1.0.24",
@@ -36,6 +39,7 @@
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
+    "scrollspy": "^1.5.0",
     "smoothstate": "^0.7.2",
     "ts-promise": "^0.3.4"
   },

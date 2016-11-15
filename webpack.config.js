@@ -9,7 +9,8 @@ var config = {
     entry: {
         contact: ['./src/client/index.tsx'],
         smoothTransition: ['./src/client/utils/smoothTransition.ts'],
-        vendor: ['react', 'react-dom', 'jquery', "react-dom", "redux-thunk", 'redux', 'react-redux']
+        pageScroll: ['./src/client/utils/pageScroll.ts'],
+        vendor: ['react', 'bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/js/bootstrap.js' , 'react-dom', 'jquery','jquery-ui-bundle', "react-dom", "redux-thunk", 'redux', 'react-redux']
 
     },
     plugins: [

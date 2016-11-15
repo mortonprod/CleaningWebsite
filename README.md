@@ -15,7 +15,7 @@ npm install
 
 ### Prerequisites
 
-You will need github and node installed. 
+You will need github and node installed. For smoothtransition jquery must be older than 3.0 ajax.success not a function anymore.
 
 
 ### Installing
@@ -36,7 +36,7 @@ npm jest
 
 ## Deployment
 
-The website has been deployed 
+The website has been deployed with docker
 
 ## Built With
 
@@ -51,3 +51,4 @@ The website has been deployed
 
 No licence but let me know how your using it for my own interest
 
+	
