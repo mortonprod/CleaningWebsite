@@ -11,7 +11,8 @@
   "homepage": "https://github.com/mortonprod/CleaningWebsite",
   "scripts": {
     "test": "jest",
-    "start": "node dist/src/server/index.js"
+    "start": "node dist/src/server/index.js",
+    "startdebug": "devtool dist/src/server/index.js"
   },
   "dependencies": {
     "affix": "^1.0.15",

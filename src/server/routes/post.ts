@@ -1,8 +1,7 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
-import * as passport from 'passport';
 import * as nodemailer from 'nodemailer'
 import  global  from "../config/global";
-export function post(router) {
+export function post(router,passport) {
 
     router.post('/contact', function (req, res) {
         console.log("Contact information " + req.body.name + "   " + req.body.email + "   " + req.body.message);
@@ -20,10 +19,13 @@ export function post(router) {
         successRedirect: '/',
         failureRedirect: '/loginfacebook'
     }));
-    router.post('/login', passport.authenticate('login', {
-        successRedirect: '/',
-        failureRedirect: '/login'
+    router.post('/login', passport.authenticate('local', {
+        successRedirect: '/', // redirect to the secure profile section
+        failureRedirect: '/login', // redirect back to the signup page if there is an error
+        failureFlash: true // allow flash messages
     }));
+
+
     router.post('/signup', passport.authenticate('signup', { successRedirect: '/', failureRedirect: '/signup', failureFlash: false }));
 }
 

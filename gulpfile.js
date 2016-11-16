@@ -8,6 +8,12 @@ var ts = require("gulp-typescript");
 gulp.task("default", ['clientBundle','clientAndServer','movePug'], function () {
  
 });
+gulp.task('watch', function () {
+    gulp.watch(['./src/client/**/*'], ['clientAndServer','clientBundle']);
+    gulp.watch(['./src/server/**/*'], ['clientAndServer']);
+    gulp.watch(['./src/server/pug/*'], ['movePug']);
+});
+
 
 gulp.task('clientBundle', shell.task([
     'webpack',

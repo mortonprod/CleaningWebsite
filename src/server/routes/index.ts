@@ -4,10 +4,10 @@ import * as path from 'path'
 import { post } from "./post";
 import { pages } from "./pages";
 
-var router = express.Router();
-post(router);
-pages(router);
 
-module.exports = function (app:any) {
+module.exports = function (app:any,passport:any) {
+    var router = express.Router();
+    post(router, passport);
+    pages(router);
     app.use('/', router);
 };

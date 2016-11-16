@@ -1,43 +1,40 @@
 ﻿import actionNames from "./actionNames";
 
-export default function commitLoginDetails(email: string, password: string) {
+export default function sendLoginDetailsToServer(email: string, password: string) {
     return (dispatch: any) => {
-        dispatch(commitingLoginDetails(true));
+        console.log("Send to server");
+        dispatch(sendingLoginDetails(true));
         $.ajax({
             type: 'POST',
             url: '/login',
             data: { email, password }
         }).done(function (data) {
-            dispatch(commitingLoginDetails(false));
+            console.log("Sent to server pass data:" + JSON.stringify(data));
+            dispatch(sendingLoginDetails(false));
             if (data.error) {
-                commitingLoginFailed(true);
+                sendingLoginDetailsSuccess(false);
             } else {
-                commitingLoginPassed(true);
+                sendingLoginDetailsSuccess(true);
             }
         }).fail(function (a, b, c, d) {
-            dispatch(commitingLoginDetails(false));
-            commitingLoginFailed(true);
+            console.log("Sent to server fail");
+            dispatch(sendingLoginDetails(false));
+            sendingLoginDetailsSuccess(false);
         });
     }
 
 }
 
-function commitingLoginDetails(bool: Boolean) {
+function sendingLoginDetails(bool: Boolean) {
     return {
-        type: actionNames().commitingLoginDetails,
+        type: actionNames().sendingLoginDetails,
         commmitingLoginDetail:bool
     }
 }
 
-function commitingLoginPassed(bool: Boolean) {
+function sendingLoginDetailsSuccess(bool: Boolean = null) {
     return {
-        type: actionNames().commitLoginDetailsPassed,
-        commmitingLoginDetail: bool
-    }
-}
-function commitingLoginFailed(bool: Boolean) {
-    return {
-        type: actionNames().commitLoginDetailsFailed,
+        type: actionNames().sendingLoginDetailsSuccess,
         commmitingLoginDetail: bool
     }
 }

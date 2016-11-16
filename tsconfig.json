@@ -1,6 +1,8 @@
 ﻿{
   "files": [
-    "./src/client/index.tsx",
+    "./src/client/pagesEntry/index.tsx",
+    "./src/client/pagesEntry/login.tsx",
+    "./src/client/pagesEntry/signup.tsx",
     "./src/client/utils/smoothTransition.ts",
     "./src/client/utils/pageScroll.ts",
     "./typings/index.d.ts",

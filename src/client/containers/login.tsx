@@ -4,13 +4,13 @@ import * as ReactDOM from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import LoginPresentation from '../components/loginPresentation';
-import commitLoginDetails from '../actions/loginAction';
+import sendLoginDetailsToServer from '../actions/loginAction';
 interface props {
-    commitLoginDetails:any,
+    sendLoginDetailsToServer:any,
     sending: any
 }
 class Login extends React.Component<props, {}> {
-    sendingClass = ""
+    sendingClass = "";
     constructor(props: any) {
         super(props);
     }
@@ -24,7 +24,7 @@ class Login extends React.Component<props, {}> {
     render() {
         return (
             <div className={this.sendingClass}>
-                <LoginPresentation submitHandler={(form: { email: string, password: string }) => this.props.commitLoginDetails(form.email,form.password)}/>
+                <LoginPresentation submitHandler={(form: { email: string, password: string }) => this.props.sendLoginDetailsToServer(form.email,form.password)}/>
             </div>
         );
     }
@@ -38,7 +38,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
 ///This will link actions and link to props in component
 const mapDispatchToProps = (dispatch: any, ownProps: any) => {
     return {
-        commitLoginDetails: bindActionCreators(commitLoginDetails, dispatch)
+        sendLoginDetailsToServer: bindActionCreators(sendLoginDetailsToServer, dispatch)
     }
 }
 ///Need to specify connect(store, action<<Need this to use action in class)(object) 

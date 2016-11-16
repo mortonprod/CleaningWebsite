@@ -12,20 +12,34 @@ export default function passportStrategy() {
     /// This is needed after authentication, when the cookie is provided.
     /// Passport will serialize this then it will pass it to the callback function which then calls done.
     passport.serializeUser(function (user, done) {
+        console.log("serialize: You;ve just logged in by calling done in passport. Save what you need to response by passing to done.");
+        console.log("User name :" + user.name);
+        console.log("User email:" + user.email);
         done(null, user);
     });
 
     passport.deserializeUser(function (user, done) {
+        console.log("deserialize: Your back again. Get what you need then call success/fail route from post which go you here.");
+        console.log("User name :" + user.name);
+        console.log("User email:" + user.email);
         done(null, user);
     });
-    passport.use('login', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true },
+    passport.use('local', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true },
         function (req, email, password, done) {
-            db.getUserFromDB(email, password)
-            .then(function (user) {
-                done(null, user);
-            },
-            function (err) {
-            });
+            var user = { name: "here", email: "here2" };
+            return done(null, user);
+            //console.log("login on server");
+            //db.getUserFromDB(email, password)
+            //.then(function (user) {
+            //    console.log("User name :" + user.name);
+            //    console.log("User email:" + user.email);
+            //    ///Return done???
+            //    done(null, user);
+            //},
+            //function (err) {
+            //    console.log("User err:" + err);
+            //    done(err, false);
+            //});
         }
     ));
     passport.use('signup', new LocalStrategy({ usernameField: 'email', passwordField: 'password', passReqToCallback: true },

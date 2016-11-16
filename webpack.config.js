@@ -7,7 +7,9 @@ var config = {
      * @var {object} entry
      */
     entry: {
-        contact: ['./src/client/index.tsx'],
+        index: ['./src/client/pagesEntry/index.tsx'],
+        login: ['./src/client/pagesEntry/login.tsx'],
+        signup: ['./src/client/pagesEntry/signup.tsx'],
         smoothTransition: ['./src/client/utils/smoothTransition.ts'],
         pageScroll: ['./src/client/utils/pageScroll.ts'],
         vendor: ['react', 'bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/js/bootstrap.js' , 'react-dom', 'jquery','jquery-ui-bundle', "react-dom", "redux-thunk", 'redux', 'react-redux']
