@@ -2,6 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import "../sass/site.scss";
+import "../images/mudCrop.png";
 import * as React from 'react';
 import { Component } from 'react';
 import * as reactDOM from "react-dom";
@@ -10,6 +11,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import store  from '../reducers/index';
 import Contact from "../containers/contact";
+import DateTime from "../containers/datetime";
 
 //const createStoreWithMiddleware = applyMiddleware(
 //    thunkMiddleware // lets us dispatch() functions
@@ -24,19 +26,13 @@ $(document).ready(function () {
         </Provider>,
         document.getElementById("react-contact")
     );
-
-//    reactDOM.render(
-//        <Provider store={store()} >
-//            <Login/>
-//        </Provider>,
-//        document.getElementById("react-login")
-//    );
-//    reactDOM.render(
-//        <Provider store={store()} >
-//            <Signup/>
-//        </Provider>,
-//        document.getElementById("react-signup")
-//    );
+    reactDOM.render(
+        <img className="img-responsive" alt="" src={require("../images/broomCrop.png")}/>,
+        document.getElementById("react-broom")
+    );
+    reactDOM.render(
+        <DateTime/>,
+        document.getElementById("react-datetime")
+    );
 });
-
 
