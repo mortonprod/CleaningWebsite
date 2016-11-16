@@ -10,6 +10,7 @@ import { addName, addEmail } from "../../client/actions/userAction"
 import Contact from "../../client/containers/contact";
 import Login from "../../client/containers/login";
 import Signup from "../../client/containers/signup";
+import DateTime from "../../client/containers/datetime";
 
 
 
@@ -30,6 +31,12 @@ const signupApp = (
         <Signup/>
     </Provider>
 )
+const datetimeApp = (
+    <Provider store={store()} >
+        <DateTime/>
+    </Provider>
+)
+
 export function pages(router) {
     router.get('/', function (req: any, res: any) {
         if (req && req.session && req.session.passport && req.session.passport.user) {
@@ -38,11 +45,12 @@ export function pages(router) {
         }
         let preloadedState = store().getState();
         let contactString = ReactDOMServer.renderToString(contactApp);
+        let datetimeString = ReactDOMServer.renderToString(datetimeApp);
         let locals = null;
         if (preloadedState.userReducer.name !=="") {
             locals = { name: preloadedState.userReducer.name, contact: contactString, preloadedState: preloadedState };
         } else {
-            locals = { contact: contactString, preloadedState: preloadedState };
+            locals = {datetime:datetimeString, contact: contactString, preloadedState: preloadedState };
         }
         let html = renderFile(path.join(__dirname, "..", "pug/index.pug"), locals);
         res.send(html);
