@@ -14,9 +14,9 @@ export default class DateTime extends React.Component<props, state> {
     }
     //Steps of two hours 9am min 3pm max.
     con = { hours: { min: 9, max: 15, step: 2 } }
-    dateChange(date) {
+    dateChange(date:any) {
     }
-    valid(currentDate) {
+    valid(currentDate:any) {
         ///test date and return true if selectable
         return true;
     }
