@@ -28,7 +28,7 @@ export default class SignupPresentation extends React.Component<props, {}> {
     }
     render() {
         return (
-            <form id = "signupForm" action='/signup' method='POST'>
+            <form id = "signupForm" className="text-center">
                 <div className="col-sm-12">
                     <div className="row">
                         <div className="col-sm-6 form-group">
@@ -44,22 +44,20 @@ export default class SignupPresentation extends React.Component<props, {}> {
                         <label> Address </label>
                         <textarea ref={(input) => this.ctrls.address = input} placeholder="Enter Address Here.." rows={3} className="form-control"/>
                     </div>
-                    <div className="row">
-                        <div className="col-sm-6 form-group">
-                            <label> Password </label>
-                            <input ref={(input) => this.ctrls.password = input} name="password" type="text" placeholder="Enter Designation Here.." className="form-control"/>
-                        </div>
+                    <div className="form-group">
+                        <label> Password </label>
+                        <input ref={(input) => this.ctrls.password = input} name="password" type="text" placeholder="Enter Password Here.." className="form-control"/>
                     </div>
+                    <div className="form-group">
+                        <label> Phone Number </label>
+                        <input ref={(input) => this.ctrls.phoneNumber = input} type="text" placeholder="Enter Phone Number Here.." className="form-control"/>
+                    </div>
+                    <div className="form-group">
+                        <label> Email Address </label>
+                        <input ref={(input) => this.ctrls.email = input} name="email" type="text" placeholder="Enter Email Address Here.." className="form-control"/>
+                    </div>
+                    <button type="submit" className="btn btn-lg btn-info" onClick={this.submitHandler}> Submit	</button>
                 </div>
-                <div className="form-group">
-                    <label> Phone Number </label>
-                    <input ref={(input) => this.ctrls.phoneNumber = input} type="text" placeholder="Enter Phone Number Here.." className="form-control"/>
-                </div>
-                <div className="form-group">
-                    <label> Email Address </label>
-                    <input ref={(input) => this.ctrls.email = input} name="email" type="text" placeholder="Enter Email Address Here.." className="form-control"/>
-                </div>
-                <button type="submit" className="btn btn-lg btn-info" onClick={this.submitHandler}> Submit	</button>				
             </form>
         );
     }

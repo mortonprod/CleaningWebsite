@@ -19,7 +19,7 @@ export default class LoginPresentation extends React.Component<props, {}> {
     }
     render() {
         return (
-            <div>
+            <div className="text-center">
                 <h1 className="text-center login-title"> Sign in </h1>
                 <div className="account-wall">
                     <form className='form-signin'>
