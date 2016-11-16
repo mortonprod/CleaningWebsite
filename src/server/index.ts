@@ -20,7 +20,5 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/index')(app, passport);
-
-app.set('port', process.env.PORT || 3000);
-var server = app.listen(app.get('port'), function () {
-});
+app.set('port', process.env.PORT || 8080);
+app.listen(app.get('port'));
