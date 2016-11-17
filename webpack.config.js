@@ -14,11 +14,11 @@ let entryFill = {
 //    entryFill.devServer = 'webpack/hot/dev-server';
 //    entryFill.devClient = 'webpack-dev-server/client?http://localhost:8081';
 //}
-//if (!isProd) {
-//    var publicPathFill = "http://localhost:8081/bundle/";
-//} else {
-//    var publicPathFill = "/bundle/";
-//}
+if (!isProd) {
+    var publicPathFill = "http://localhost:8081/bundle/";
+} else {
+    var publicPathFill = "dist/public/bundle/";
+}
 
 var config = {
     /**
@@ -39,8 +39,8 @@ var config = {
     output: {
         path: '/dist/public/bundle',
         filename: '[name].js',
-        libraryTarget: 'umd'
-        //publicPath: publicPathFill
+        libraryTarget: 'umd',
+        publicPath: publicPathFill
     },
     resolve: {
         extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
@@ -60,7 +60,7 @@ var config = {
             //  { test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery' },
             { test: /\.tsx?$/, loader: "ts-loader" },
             {
-                test: /\.(png|ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+                test: /\.(pug|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
                 loader: 'file-loader'
             }
         ]
