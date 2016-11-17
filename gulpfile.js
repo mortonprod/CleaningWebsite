@@ -14,6 +14,10 @@ gulp.task('watch', function () {
     gulp.watch(['./src/server/pug/*'], ['movePug']);
 });
 
+gulp.task('watchPug', function () {
+    gulp.watch(['./src/server/pug/*'], ['movePug']);
+});
+
 
 gulp.task('clientBundle', shell.task([
     'webpack',
