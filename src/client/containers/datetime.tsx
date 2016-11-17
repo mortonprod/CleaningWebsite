@@ -2,10 +2,12 @@
 import * as Datetime from "react-datetime";
 //import * as moments from 'moment';
 interface state {
-    day:string,
+    day: string,
     month: string,
+    year: string,
     hour: string,
-    minutes:string
+    minutes: string,
+    listOfDates: Array<string>
 }
 interface props {
 }
@@ -24,40 +26,64 @@ export default class DateTime extends React.Component<props, state> {
         this.setState({
             day: moment.date(),
             month: moment.month(),
+            year: moment.year(),
             hour: moment.hour(),
-            minutes: moment.minutes()
+            minutes: moment.minutes(),
+            listOfDates: this.state.listOfDates
         })
     }
-    valid(current:any) {
+    valid(current: any) {
         return current.day() !== 0 && current.day() !== 6;
     };
     componentWillMount() {
         this.setState({
             day: "",
             month: "",
+            year: "",
             hour: "",
-            minutes: ""
+            minutes: "",
+            listOfDates: []
         })
     }
     submitHandler() {
     }
     addHandler() {
+        let list:any
+        if (this.state.day !== "") {
+            let datetime = this.state.day + "/" + this.state.month + "/" + this.state.year + "  " + this.state.hour + ":" + this.state.minutes
+            list = this.state.listOfDates.concat(datetime);
+        } else {
+            list = this.state.listOfDates;
+        }
         this.setState({
             day: "",
             month: "",
+            year: "",
             hour: "",
-            minutes: ""
+            minutes: "",
+            listOfDates: list
         })
     }
     render() {
-        let curDis
+        let curDis: any
         if (this.state.day !== "") {
             curDis = (
                 <div>
-                    <h5> Day: {this.state.day} Month: {this.state.month}</h5>
-                    <h5> Hour: {this.state.hour} Min: {this.state.minutes} </h5>
+                    <h5> {this.state.day}/{this.state.month}/{this.state.year}</h5>
+                    <h5> {this.state.hour}: {this.state.minutes} </h5>
                 </div>
             )
+        }
+        console.log("length: " + this.state.listOfDates.length);
+
+        var list: Array<any> = [];
+        for (let i = 0; i < this.state.listOfDates.length; i++) {
+            console.log(this.state.listOfDates[i]);
+            list.push(
+                <div>
+                    <h5> {this.state.listOfDates[i]} </h5>
+                </div>
+            );
         }
 
         return (
@@ -70,6 +96,7 @@ export default class DateTime extends React.Component<props, state> {
                 </div>
                 <div className="col-lg-4">
                     <h3><span className="glyphicon glyphicon-list"></span> Check</h3>
+                    {list}
                 </div>
                 <div className="col-lg-4">
                     <h3><span className="glyphicon glyphicon-thumbs-up"></span> Submit</h3>
