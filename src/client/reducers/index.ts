@@ -144,11 +144,44 @@ function signupReducer(state = initialState.contact, action: any) {
     }
 }
 
+function reviewsReducer(state = initialState.contact, action: any) {
+    switch (action.type) {
+        case actionNames().addMessage:
+            return Object.assign({}, state, {
+                contact: {
+                    message: action.message,
+                    helpMessage: state.helpMessage,
+                    sendingMessage: state.sendingMessage
+                }
+            })
+        case actionNames().addHelpMessage:
+            return Object.assign({}, state, {
+                contact: {
+                    message: state.message,
+                    helpMessage: action.message,
+                    sendingMessage: state.sendingMessage
+                }
+            })
+        case actionNames().addSendingMessage:
+            return Object.assign({}, state, {
+                contact: {
+                    message: state.message,
+                    helpMessage: state.message,
+                    sendingMessage: action.sendingMessage
+                }
+            })
+        default:
+            return state
+    }
+}
+
+
 const RootReducer = combineReducers({
     userReducer,
     contactReducer,
     loginReducer,
-    signupReducer
+    signupReducer,
+    reviewsReducer
 });
 ///If we are running on client then fill with preloaded state. Otherwise use initial state from server.
 var initial: any;
