@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import store  from '../reducers/index';
 import Contact from "../containers/contact";
 import DateTime from "../containers/datetime";
+import Reviews from "../containers/reviews";
 
 //const createStoreWithMiddleware = applyMiddleware(
 //    thunkMiddleware // lets us dispatch() functions
@@ -34,5 +35,12 @@ $(document).ready(function () {
         <DateTime/>,
         document.getElementById("react-datetime")
     );
+    reactDOM.render(
+        <Provider store={store()} >
+            <Reviews/>
+        </Provider>,
+        document.getElementById("react-reviews")
+    );
+
 });
 
