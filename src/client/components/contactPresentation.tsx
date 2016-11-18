@@ -1,11 +1,18 @@
-﻿import  * as React from 'react';
+﻿import * as React from 'react';
+var Spinner = require('react-spinkit');
 interface props {
     name: string,
     email: string,
     message: string,
-    submitHandler: any
+    helpMessage:string,
+    submitHandler: any,
+    sending: Boolean,
 
 }
+/**
+ * @class
+ * Presentational component of contact. This is a pure component.
+ */
 export default class ContactPresentation extends React.Component<props, {}> {
     constructor(props: any) {
         super();
@@ -25,34 +32,50 @@ export default class ContactPresentation extends React.Component<props, {}> {
     }
 
     render() {
+        let comp: any;
+        if (this.props.sending) {
+            comp = (
+                <Spinner spinnerName='chasing-dots' />
+            )
+        } else {
+            comp = (
+                <div>
+                    <form name="sentMessage" id="contactForm" noValidate>
+                        <div className="row control-group">
+                            <div className="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Name</label>
+                                <input ref={(input) => this.ctrls.name = input} defaultValue={this.props.name} type="text" className="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name."/>
+                            </div>
+                        </div>
+                        <div className="row control-group">
+                            <div className="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Email Address</label>
+                                <input ref={(input) => this.ctrls.email = input} defaultValue={this.props.email} type="email" className="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address."/>
+                            </div>
+                        </div>
+                        <div className="row control-group">
+                            <div className="form-group col-xs-12 floating-label-form-group controls">
+                                <label>Message</label>
+                                <textarea ref={(input) => this.ctrls.message = input} defaultValue={this.props.message}  rows={5} className="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                            </div>
+                        </div>
+                        <br/>
+                        <div id="success"></div>
+                        <div className="row">
+                            <div className="form-group col-xs-12">
+                                <button onClick={this.submitHandler} className="btn btn-success btn-lg">Send!!!</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p>{this.props.helpMessage} </p>
+                </div>
+            )
+        }
+
         return (
-                <form name="sentMessage" id="contactForm" noValidate>
-                    <div className="row control-group">
-                        <div className="form-group col-xs-12 floating-label-form-group controls">
-                        <label>Name</label>
-                        <input ref={(input) => this.ctrls.name = input} defaultValue={this.props.name} type="text" className="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name."/>
-                        </div>
-                    </div>
-                    <div className="row control-group">
-                        <div className="form-group col-xs-12 floating-label-form-group controls">
-                        <label>Email Address</label>
-                        <input ref={(input) => this.ctrls.email = input} defaultValue={this.props.email} type="email" className="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address."/>
-                        </div>
-                    </div>
-                    <div className="row control-group">
-                        <div className="form-group col-xs-12 floating-label-form-group controls">
-                        <label>Message</label>
-                        <textarea ref={(input) => this.ctrls.message = input} defaultValue={this.props.message}  rows={5} className="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
-                        </div>
-                    </div>
-                    <br/>
-                    <div id="success"></div>
-                    <div className="row">
-                    <div className="form-group col-xs-12">
-                        <button onClick={this.submitHandler} className="btn btn-success btn-lg">Send</button>
-                        </div>
-                    </div>
-                </form>
+            <div>
+                {comp}
+            </div>
         );
     }
 }
