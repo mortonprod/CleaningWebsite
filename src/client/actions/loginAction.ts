@@ -3,38 +3,37 @@
 export default function sendLoginDetailsToServer(email: string, password: string) {
     return (dispatch: any) => {
         console.log("Send to server");
-        dispatch(sendingLoginDetails(true));
+        dispatch(sending(true));
         $.ajax({
             type: 'POST',
             url: '/login',
             data: { email, password }
         }).done(function (data) {
             console.log("Sent to server pass data:" + JSON.stringify(data));
-            dispatch(sendingLoginDetails(false));
+            dispatch(sending(false));
             if (data.error) {
-                sendingLoginDetailsSuccess(false);
+                addError(data.error);
             } else {
-                sendingLoginDetailsSuccess(true);
             }
         }).fail(function (a, b, c, d) {
             console.log("Sent to server fail");
-            dispatch(sendingLoginDetails(false));
-            sendingLoginDetailsSuccess(false);
+            dispatch(sending(false));
+            addError("Error sending to server");
         });
     }
 
 }
 
-function sendingLoginDetails(bool: Boolean) {
+function sending(bool: Boolean) {
     return {
-        type: actionNames().sendingLoginDetails,
-        commmitingLoginDetail:bool
+        type: actionNames().login.setSending,
+        sending:bool
     }
 }
 
-function sendingLoginDetailsSuccess(bool: Boolean = null) {
+function addError(error:string  = null) {
     return {
-        type: actionNames().sendingLoginDetailsSuccess,
-        commmitingLoginDetail: bool
+        type: actionNames().login.setError,
+        errorMessage:error
     }
 }

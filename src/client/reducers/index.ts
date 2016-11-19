@@ -5,45 +5,148 @@ import thunkMiddleware from 'redux-thunk';
 import DateTimes from "../utils/datetime";
 import actionNames from "../actions/actionNames";
 
-
-let holder: Array<DateTimes> = [];
-let holder2: Array<string> = [];
+//let holder: Array<DateTimes> = [];
+//let holder2: Array<string> = [];
+//let holder3: Array<moment.Moment> = [];
 const initialState = {
     user: {
-        name: "",
-        email: "",
-        dateTime:holder
+        name: {
+            first: null,
+            second: null
+        },
+        email: null,
+        address: null,
+        phoneNumber: null,
+        datesAndTimes: null,
+        reviews: null,
+        messages: null
+    },
+    login: {
+        sending: null,
+        errorMessage:null
     },
     contact: {
-        message: "",
-        helpMessage: holder2,
+        message: null,
+        helpMessage: null,
         sendingMessage: false,
+    },
+    datetime: {
+        newBookings: null,
+        allDatesAndTimes: null,
+        sending: false
+    },
+    reviews: {
+        reviewsList: null,
+        showNumber: 5,
+        sendingReview: false
     }
 }
 function userReducer(state = initialState.user, action: any) {
     switch (action.type) {
-        case  actionNames().addName:
+        case actionNames().user.addName:
             return Object.assign({}, state, {
                 user: {
-                    name: action.name,
+                    name: {
+                        first: action.name.first,
+                        second: action.name.second
+                    },
                     email: state.email,
-                    dateTime: state.dateTime
+                    address: state.address,
+                    phoneNumber: state.phoneNumber,
+                    datesAndTimes: state.datesAndTimes,
+                    reviews: state.reviews,
+                    messages: state.messages
+
                 }
             })
-        case actionNames().addEmail:
+        case actionNames().user.addEmail:
             return Object.assign({}, state, {
                 user: {
-                    name: state.name,
+                    name: {
+                        first: state.name.first,
+                        second: state.name.second
+                    },
                     email: action.email,
-                    dateTime: state.dateTime
+                    address: state.address,
+                    phoneNumber: state.phoneNumber,
+                    datesAndTimes: state.datesAndTimes,
+                    reviews: state.reviews,
+                    messages: state.messages
                 }
             })
-        case actionNames().addUserDatesTimes:
+        case actionNames().user.addAddress:
             return Object.assign({}, state, {
                 user: {
-                    name: state.name,
+                    name: {
+                        first: state.name.first,
+                        second: state.name.second
+                    },
                     email: state.email,
-                    dateTime: action.dateTime
+                    address: action.address,
+                    phoneNumber: state.phoneNumber,
+                    datesAndTimes: state.datesAndTimes,
+                    reviews: state.reviews,
+                    messages: state.messages
+                }
+            })
+        case actionNames().user.addPhoneNumber:
+            return Object.assign({}, state, {
+                user: {
+                    name: {
+                        first: state.name.first,
+                        second: state.name.second
+                    },
+                    email: state.email,
+                    address: state.address,
+                    phoneNumber: action.phoneNumber,
+                    datesAndTimes: state.datesAndTimes,
+                    reviews: state.reviews,
+                    messages: state.messages
+                }
+            })
+        case actionNames().user.addDateTimes:
+            return Object.assign({}, state, {
+                user: {
+                    name: {
+                        first: state.name.first,
+                        second: state.name.second
+                    },
+                    email: state.email,
+                    address: state.address,
+                    phoneNumber: state.phoneNumber,
+                    datesAndTimes: action.datesAndTimes,
+                    reviews: state.reviews,
+                    messages: state.messages
+                }
+            })
+        case actionNames().user.addReviews:
+            return Object.assign({}, state, {
+                user: {
+                    name: {
+                        first: state.name.first,
+                        second: state.name.second
+                    },
+                    email: state.email,
+                    address: state.address,
+                    phoneNumber: state.phoneNumber,
+                    datesAndTimes: state.datesAndTimes,
+                    reviews: action.reviews,
+                    messages: state.messages
+                }
+            })
+        case actionNames().user.addMessages:
+            return Object.assign({}, state, {
+                user: {
+                    name: {
+                        first: state.name.first,
+                        second: state.name.second
+                    },
+                    email: state.email,
+                    address: state.address,
+                    phoneNumber: state.phoneNumber,
+                    datesAndTimes: state.datesAndTimes,
+                    reviews: state.reviews,
+                    messages: action.messages
                 }
             })
         default:
@@ -53,7 +156,7 @@ function userReducer(state = initialState.user, action: any) {
 
 function contactReducer(state = initialState.contact, action: any) {
     switch (action.type) {
-        case actionNames().addMessage:
+        case actionNames().contact.addMessage:
             return Object.assign({}, state, {
                 contact: {
                     message: action.message,
@@ -61,7 +164,7 @@ function contactReducer(state = initialState.contact, action: any) {
                     sendingMessage: state.sendingMessage
                 }
             })
-        case actionNames().addHelpMessage:
+        case actionNames().contact.addHelpMessage:
             return Object.assign({}, state, {
                 contact: {
                     message: state.message,
@@ -69,7 +172,7 @@ function contactReducer(state = initialState.contact, action: any) {
                     sendingMessage: state.sendingMessage
                 }
             })
-        case actionNames().addSendingMessage:
+        case actionNames().contact.addSendingMessage:
             return Object.assign({}, state, {
                 contact: {
                     message: state.message,
@@ -82,30 +185,30 @@ function contactReducer(state = initialState.contact, action: any) {
     }
 }
 
-function loginReducer(state = initialState.contact, action: any) {
+function datetimeReducer(state = initialState.datetime, action: any) {
     switch (action.type) {
-        case actionNames().addMessage:
+        case actionNames().datetime.addNewBookings:
             return Object.assign({}, state, {
-                contact: {
-                    message: action.message,
-                    helpMessage: state.helpMessage,
-                    sendingMessage: state.sendingMessage
+                datetime: {
+                    newBooking: action.newBookings,
+                    allDatesAndTimes: state.allDatesAndTimes,
+                    sending: state.sending
                 }
             })
-        case actionNames().addHelpMessage:
+        case actionNames().datetime.addAllBookings:
             return Object.assign({}, state, {
-                contact: {
-                    message: state.message,
-                    helpMessage: action.message,
-                    sendingMessage: state.sendingMessage
+                datetime: {
+                    newBooking: state.newBookings,
+                    allDatesAndTimes: action.allDatesAndTimes,
+                    sending: state.sending
                 }
             })
-        case actionNames().addSendingMessage:
+        case actionNames().datetime.setSending:
             return Object.assign({}, state, {
-                contact: {
-                    message: state.message,
-                    helpMessage: state.message,
-                    sendingMessage: action.sendingMessage
+                datetime: {
+                    newBooking: state.newBookings,
+                    allDatesAndTimes: state.allDatesAndTimes,
+                    sending: action.sending
                 }
             })
         default:
@@ -113,30 +216,30 @@ function loginReducer(state = initialState.contact, action: any) {
     }
 }
 
-function signupReducer(state = initialState.contact, action: any) {
+function reviewsReducer(state = initialState.reviews, action: any) {
     switch (action.type) {
-        case actionNames().addMessage:
+        case actionNames().reviews.addReviews:
             return Object.assign({}, state, {
-                contact: {
-                    message: action.message,
-                    helpMessage: state.helpMessage,
-                    sendingMessage: state.sendingMessage
+                reviews: {
+                    reviewsList: action.reviewList,
+                    showNumber: state.showNumber,
+                    sendingReview: state.sendingReview
                 }
             })
-        case actionNames().addHelpMessage:
+        case actionNames().reviews.changeShowNumber:
             return Object.assign({}, state, {
-                contact: {
-                    message: state.message,
-                    helpMessage: action.message,
-                    sendingMessage: state.sendingMessage
+                reviews: {
+                    reviewsList: state.reviewsList,
+                    showNumber: action.showNumber,
+                    sendingReview: state.sendingReview
                 }
             })
-        case actionNames().addSendingMessage:
+        case actionNames().reviews.setSending:
             return Object.assign({}, state, {
-                contact: {
-                    message: state.message,
-                    helpMessage: state.message,
-                    sendingMessage: action.sendingMessage
+                reviews: {
+                    reviewsList: state.reviewsList,
+                    showNumber: state.showNumber,
+                    sendingReview: action.sendingReview
                 }
             })
         default:
@@ -144,49 +247,39 @@ function signupReducer(state = initialState.contact, action: any) {
     }
 }
 
-function reviewsReducer(state = initialState.contact, action: any) {
+function loginReducer(state = initialState.login, action: any) {
     switch (action.type) {
-        case actionNames().addMessage:
+        case actionNames().login.setSending:
             return Object.assign({}, state, {
-                contact: {
-                    message: action.message,
-                    helpMessage: state.helpMessage,
-                    sendingMessage: state.sendingMessage
+                login: {
+                    sending: action.sending,
+                    errorMessage: state.errorMessage
                 }
             })
-        case actionNames().addHelpMessage:
+        case actionNames().login.setError:
             return Object.assign({}, state, {
-                contact: {
-                    message: state.message,
-                    helpMessage: action.message,
-                    sendingMessage: state.sendingMessage
-                }
-            })
-        case actionNames().addSendingMessage:
-            return Object.assign({}, state, {
-                contact: {
-                    message: state.message,
-                    helpMessage: state.message,
-                    sendingMessage: action.sendingMessage
+                login: {
+                    sending: state.sending,
+                    errorMessage: action.errorMessage
                 }
             })
         default:
             return state
     }
 }
-
 
 const RootReducer = combineReducers({
     userReducer,
     contactReducer,
-    loginReducer,
-    signupReducer,
-    reviewsReducer
+    datetimeReducer,
+    reviewsReducer,
+    loginReducer
 });
 ///If we are running on client then fill with preloaded state. Otherwise use initial state from server.
 var initial: any;
 if (typeof window !== "undefined" && typeof window.__PRELOADED_STATE__ !== "undefined") {
     initial = window.__PRELOADED_STATE__
+    console.log("Initial state: " + JSON.stringify(initial))
 } else {
     initial = (function () { return; })();
     console.log("No window initial state specified. Set initial to undefined")

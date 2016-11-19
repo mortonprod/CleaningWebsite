@@ -1,24 +1,32 @@
 ﻿export default function actionNames() {
     return {
-        ///User
-        addName:"ADD_NAME",
-        addEmail: "ADD_EMAIL",
-        addUserDatesTimes: "ADD_USER_DATES_TIMES",
-        ///Contact
-        addMessage: "ADD_MESSAGE",
-        addHelpMessage: "ADD_HELP_MESSAGE",
-        addSendingMessage:"ADD_SENDING_MESSAGE",
-        ///Datetime
-        addAllDatesTimes: "ADD_ALL_DATES_TIMES",
-        ///Login
-        sendLoginDetails: "SEND_LOGIN_DETAILS",
-        sendingLoginDetails: "SENDING_LOGIN_DETAILS",
-        sendingLoginDetailsSuccess: "SENDING_LOGIN_DETAILS_SUCCESS",
-        ///Signup
-        commitSignupDetails: "COMMIT_SIGNUP_DETAILS",
-        commitingSignupDetails: "COMMIT_SIGNUP_DETAILS",
-        commitSignupDetailsFailed: "COMMIT_SIGNUP_DETAILS_Failed",
-        commitSignupDetailsPassed: "COMMIT_SIGNUP_DETAILS_Passed"
-
+        user: {
+            addName: "ADD_NAME",
+            addEmail: "ADD_EMAIL",
+            addAddress: "ADD_ADDRESS",
+            addPhoneNumber: "ADD_PHONE_NUMBER",
+            addDateTimes: "ADD_DATE_TIMES",
+            addReviews: "ADD_REVIEWS",
+            addMessages: "ADD_MESSAGES"
+        },
+        login: {
+            setSending: "SET_SENDING",
+            setError:"SET_ERROR"
+        },
+        contact: {
+            addMessage: "ADD_MESSAGE",
+            addHelpMessage: "ADD_HELP_MESSAGE",
+            addSendingMessage: "ADD_SENDING_MESSAGE",
+        },
+        datetime: {
+            addNewBookings: "ADD_NEW_BOOKINGS",
+            addAllBookings: "ADD_ALL_BOOKINGS",
+            setSending: "SET_SENDING"
+        },
+        reviews: {
+            addReviews: "ADD_REVIEWS",
+            changeShowNumber: "CHANGE_SHOW_NUMBER",
+            setSending:"SET_SENDING"
+        }
     }
 }
