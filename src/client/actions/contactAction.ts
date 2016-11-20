@@ -71,7 +71,7 @@ function sendMessageToServer(name:string, email:string, message:string) {
  */
 function addMessage(message:string) {
     return {
-        type: actionNames().addMessage,
+        type: actionNames().contact.addMessage,
         message
     }
 }
@@ -82,7 +82,7 @@ function addMessage(message:string) {
  */
 function addHelpMessage(helpMessage = ["completed"]) {
     return {
-        type: actionNames().addHelpMessage,
+        type: actionNames().contact.addHelpMessage,
         helpMessage
     }
 }
@@ -93,7 +93,7 @@ function addHelpMessage(helpMessage = ["completed"]) {
  */
 function addSendingMessage(bool: boolean) {
     return {
-        type: actionNames().addSendingMessage,
+        type: actionNames().contact.addSendingMessage,
         sending:bool
     }
 }

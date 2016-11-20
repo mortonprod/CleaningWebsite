@@ -8,14 +8,11 @@ import * as reactDOM from "react-dom";
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import store  from '../reducers/index';
-import Signup from "../containers/signup";
+import apps from "../../client/containers/index";
 
 $(document).ready(function () {
     reactDOM.render(
-        <Provider store={store()} >
-            <Signup/>
-        </Provider>,
+        apps().signupApp,
         document.getElementById("react-signup")
     );
 });

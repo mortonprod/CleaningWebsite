@@ -27,6 +27,11 @@
             addReviews: "ADD_REVIEWS",
             changeShowNumber: "CHANGE_SHOW_NUMBER",
             setSending:"SET_SENDING"
-        }
+        },
+        signup: {
+            sentPassed: "SENT_PASSED",
+            setSending: "SET_SENDING"
+        },
+
     }
 }

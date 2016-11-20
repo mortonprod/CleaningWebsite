@@ -7,15 +7,12 @@ import { Component } from 'react';
 import * as reactDOM from "react-dom";
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import store  from '../reducers/index';
-import Login from "../containers/login";
+import apps from "../../client/containers/index";
+
 
 $(document).ready(function () {
     reactDOM.render(
-        <Provider store={store()} >
-            <Login/>
-        </Provider>,
+        apps().loginApp,
         document.getElementById("react-login")
     );
 });

@@ -8,7 +8,44 @@ import actionNames from "../actions/actionNames";
 //let holder: Array<DateTimes> = [];
 //let holder2: Array<string> = [];
 //let holder3: Array<moment.Moment> = [];
-const initialState = {
+interface IInitialState {
+    user: {
+        name: {
+            first: string,
+            second: string
+        },
+        email: string,
+        address: string,
+        phoneNumber: string,
+        datesAndTimes: Array<moment.Moment>,
+        reviews: any,
+        messages: Array<string>
+    },
+    login: {
+        sending: Boolean,
+        errorMessage: Boolean
+    },
+    signup: {
+        sentPassed: Boolean,
+        setSending: Boolean
+    }
+    contact: {
+        message: string,
+        helpMessage: string,
+        sendingMessage: Boolean
+    },
+    datetime: {
+        newBookings: Array<moment.Moment>,
+        allDatesAndTimes: Array<moment.Moment>,
+        sending: Boolean
+    },
+    reviews: {
+        reviewsList: any,
+        showNumber: number,
+        sendingReview: Boolean
+    }
+}
+const initialState = <IInitialState>{
     user: {
         name: {
             first: null,
@@ -23,7 +60,11 @@ const initialState = {
     },
     login: {
         sending: null,
-        errorMessage:null
+        errorMessage: null
+    },
+    signup: {
+        sentPassed: null,
+        setSending: false
     },
     contact: {
         message: null,
@@ -267,9 +308,31 @@ function loginReducer(state = initialState.login, action: any) {
             return state
     }
 }
+function signupReducer(state = initialState.signup, action: any) {
+    switch (action.type) {
+        case actionNames().signup.sentPassed:
+            return Object.assign({}, state, {
+                signup: {
+                    sending: action.sending,
+                    errorMessage: state.sentPassed
+                }
+            })
+        case actionNames().signup.setSending:
+            return Object.assign({}, state, {
+                signup: {
+                    sending: state.sentPassed,
+                    errorMessage: action.sentPassed
+                }
+            })
+        default:
+            return state
+    }
+}
+
 
 const RootReducer = combineReducers({
     userReducer,
+    signupReducer,
     contactReducer,
     datetimeReducer,
     reviewsReducer,

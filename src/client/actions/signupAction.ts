@@ -2,42 +2,36 @@
 
 export default function commitSignupDetails(firstName: string, secondName: string, address: string, password: string, phoneNumber: string, email: string) {
     return (dispatch: any) => {
-        dispatch(commitingSignupDetails(true));
+        dispatch(sentPassed(true));
         $.ajax({
             type: 'POST',
             url: '/signup',
             data: { firstName,secondName, address, password,phoneNumber,email }
         }).done(function (data) {
-            dispatch(commitingSignupDetails(false));
+            dispatch(sending(false));
             if (data.error) {
-                commitingSignupFailed(true);
+                sentPassed(true);
             } else {
-                commitingSignupPassed(true);
+                sentPassed(true);
             }
-        }).fail(function (a, b, c, d) {
-            dispatch(commitingSignupDetails(false));
-            commitingSignupFailed(true);
+            }).fail(function (a, b, c, d) {
+                dispatch(sending(false));
+                sentPassed(true);
         });
     }
 
 }
 
-function commitingSignupDetails(bool: Boolean) {
+function sentPassed(bool: Boolean) {
     return {
-        type: actionNames().commitingSignupDetails,
-        commmitingSignupDetail:bool
+        type: actionNames().signup.sentPassed,
+        sentPassed:bool
     }
 }
 
-function commitingSignupPassed(bool: Boolean) {
+function sending(bool: Boolean) {
     return {
-        type: actionNames().commitSignupDetailsPassed,
-        commmitingSignupDetail: bool
-    }
-}
-function commitingSignupFailed(bool: Boolean) {
-    return {
-        type: actionNames().commitSignupDetailsFailed,
-        commmitingSignupDetail: bool
+        type: actionNames().signup.setSending,
+        sending: bool
     }
 }

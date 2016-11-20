@@ -9,10 +9,8 @@ import * as reactDOM from "react-dom";
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import store  from '../reducers/index';
-import Contact from "../containers/contact";
-import DateTime from "../containers/datetime";
-import Reviews from "../containers/reviews";
+import store from '../reducers/index';
+import apps from "../containers/index";
 
 //const createStoreWithMiddleware = applyMiddleware(
 //    thunkMiddleware // lets us dispatch() functions
@@ -22,9 +20,7 @@ import Reviews from "../containers/reviews";
 
 $(document).ready(function () {
     reactDOM.render(
-        <Provider store={store()} >
-            <Contact/>
-        </Provider>,
+        apps().contactApp,
         document.getElementById("react-contact")
     );
     reactDOM.render(
@@ -32,13 +28,11 @@ $(document).ready(function () {
         document.getElementById("react-broom")
     );
     reactDOM.render(
-        <DateTime/>,
+        apps().datetimeApp,
         document.getElementById("react-datetime")
     );
     reactDOM.render(
-        <Provider store={store()} >
-            <Reviews/>
-        </Provider>,
+        apps().reviewsApp,
         document.getElementById("react-reviews")
     );
 

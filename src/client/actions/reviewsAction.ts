@@ -24,14 +24,14 @@ export default function sendingReview(email: string, password: string) {
 
 function reviews(bool: Boolean) {
     return {
-        type: actionNames().sendingLoginDetails,
+        type: actionNames().reviews.setSending,
         commmitingLoginDetail:bool
     }
 }
 
 function sendingLoginDetailsSuccess(bool: Boolean = null) {
     return {
-        type: actionNames().sendingLoginDetailsSuccess,
+        type: actionNames().reviews.setSending,
         commmitingLoginDetail: bool
     }
 }

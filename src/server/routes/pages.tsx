@@ -6,46 +6,21 @@ import { Provider } from 'react-redux';
 import * as path from 'path'
 
 import store from "../../client/reducers/index";
-import { addName, addEmail } from "../../client/actions/userAction"
-import Contact from "../../client/containers/contact";
-import Login from "../../client/containers/login";
-import Signup from "../../client/containers/signup";
-import DateTime from "../../client/containers/datetime";
+//import { addName, addEmail } from "../../client/actions/userAction"
+import apps from "../../client/containers/index";
 
 
-
-const contactApp = (
-<Provider store={ store() } >
-    <Contact/>
-</Provider> 
-)
-
-const loginApp = (
-    <Provider store={store()} >
-        <Login/>
-    </Provider>
-)
-
-const signupApp = (
-    <Provider store={store()} >
-        <Signup/>
-    </Provider>
-)
-const datetimeApp = (
-    <Provider store={store()} >
-        <DateTime/>
-    </Provider>
-)
 
 export function pages(router) {
     router.get('/', function (req: any, res: any) {
         if (req && req.session && req.session.passport && req.session.passport.user) {
-            store().dispatch(addName(req.session.passport.user.name))
-            store().dispatch(addEmail(req.session.passport.user.email))
+        //    store().dispatch(addName(req.session.passport.user.name))
+        //    store().dispatch(addEmail(req.session.passport.user.email))
         }
         let preloadedState = store().getState();
-        let contactString = ReactDOMServer.renderToString(contactApp);
-        let datetimeString = ReactDOMServer.renderToString(datetimeApp);
+        let contactString = ReactDOMServer.renderToString(apps().contactApp);
+        let datetimeString = ReactDOMServer.renderToString(apps().datetimeApp);
+        console.log("contact app: " + contactString);
         let locals = null;
         if (preloadedState.userReducer.name !=="") {
             locals = { name: preloadedState.userReducer.name, contact: contactString, preloadedState: preloadedState };
@@ -57,7 +32,7 @@ export function pages(router) {
     });
     router.get('/login', function (req: any, res: any) {
         let preloadedState = store().getState();
-        let loginString = ReactDOMServer.renderToString(loginApp);
+        let loginString = ReactDOMServer.renderToString(apps().loginApp);
         let locals = { login: loginString, preloadedState: preloadedState };
         let html = renderFile(path.join(__dirname, "..", "pug/login.pug"), locals);
         res.send(html);
@@ -68,7 +43,7 @@ export function pages(router) {
     });
     router.get('/signup', function (req, res) {
         let preloadedState = store().getState();
-        let signupString = ReactDOMServer.renderToString(signupApp);
+        let signupString = ReactDOMServer.renderToString(apps().signupApp);
         let locals = { signup: signupString, preloadedState: preloadedState };
         let html = renderFile(path.join(__dirname, "..", "pug/signup.pug"), locals);
         res.send(html);

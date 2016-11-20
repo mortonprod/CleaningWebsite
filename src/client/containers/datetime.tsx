@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as Datetime from "react-datetime";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import  sendBooking  from '../actions/datetimeAction';
+import sendBooking from '../actions/datetimeAction';
 
 var Spinner = require('react-spinkit');
 interface state {
@@ -12,9 +12,9 @@ interface state {
 }
 interface props {
     sending: Boolean,
-    sentBooking: Boolean,
     inValidDatesAndTimes: Array<moment.Moment>,
     yourDatesAndTimes: Array<moment.Moment>,
+    sentSuccess: Boolean,
     sendBooking: any
 }
 /**
@@ -25,7 +25,7 @@ class DateTime extends React.Component<props, state> {
     constructor(props: any) {
         super(props);
     }
-    noTimes: Array<string>;
+    noTimes: Array<string> = [];
     //Steps of two hours 9am min 3pm max.
     con = { hours: { min: 9, max: 15, step: 2 } }
     /**
@@ -34,8 +34,9 @@ class DateTime extends React.Component<props, state> {
      * Check this date for all the times we can't use so we can render it.
      * @param moment
      */
-    dateChange(moment: any) {
-        console.log(moment().format('LLLL'));  
+    dateChange(moment: moment.Moment) {
+        this.noTimes = [];
+        console.log(moment.format('LLLL'));
         this.setState({
             currentMoment: moment,
             listOfMoments: this.state.listOfMoments
@@ -43,7 +44,7 @@ class DateTime extends React.Component<props, state> {
         for (let i = 0; this.props.inValidDatesAndTimes.length; i++) {
             let momentStored: moment.Moment = this.props.inValidDatesAndTimes[i];
             if (momentStored.date() === moment.date() && momentStored.month() === moment.month() && momentStored.year() === moment.year()) {
-                this.noTimes.push(moment().format("hh:mm:ss a"));
+                this.noTimes.push(moment.format("hh:mm:ss a"));
             }
         }
     }
@@ -53,18 +54,20 @@ class DateTime extends React.Component<props, state> {
      * @param current
      */
     valid(current: moment.Moment) {
-        for (let i = 0; this.props.inValidDatesAndTimes.length; i++) {
-            let momentStored: moment.Moment = this.props.inValidDatesAndTimes[i];
-            if (current.day === momentStored.day && current.month !== momentStored.month && current.year !== momentStored.year) {
-                return false;
+        if (typeof this.props.inValidDatesAndTimes !== "undefined" && this.props.inValidDatesAndTimes !== null ) {
+            for (let i = 0; this.props.inValidDatesAndTimes.length; i++) {
+                let momentStored: moment.Moment = this.props.inValidDatesAndTimes[i];
+                if (current.day === momentStored.day && current.month !== momentStored.month && current.year !== momentStored.year) {
+                    return false;
+                }
             }
         }
         return true;
     }
     componentWillMount() {
         this.setState({
-            currentMoment:null,
-            listOfMoments:[]
+            currentMoment: null,
+            listOfMoments: []
         })
     }
     submitHandler() {
@@ -82,7 +85,7 @@ class DateTime extends React.Component<props, state> {
             list = this.state.listOfMoments;
         }
         this.setState({
-            currentMoment:null,
+            currentMoment: null,
             listOfMoments: list
         })
     }
@@ -125,12 +128,12 @@ class DateTime extends React.Component<props, state> {
                         <h3><span className="glyphicon glyphicon-ok"></span> Add</h3>
                         {curDis}
                         <button onClick={this.addHandler.bind(this)} className='btn btn-lg btn-primary btn-block'> Add </button>
-                        <Datetime onChange={this.dateChange.bind(this)} isValidDate={this.valid} timeConstraints={this.con}/>
+                        <Datetime onChange={this.dateChange.bind(this)} isValidDate={this.valid.bind(this)} timeConstraints={this.con}/>
                     </div>
                     <div className="col-lg-3">
                         <h3><span className="glyphicon glyphicon-remove-sign"></span>Not available</h3>
                         {noTimesComp}
-                    </div>	
+                    </div>
                     <div className="col-lg-3">
                         <h3><span className="glyphicon glyphicon-list"></span> Check</h3>
                         {list}
@@ -149,7 +152,6 @@ class DateTime extends React.Component<props, state> {
         );
     }
 }
-
 const mapStateToProps = (state: any, ownProps: any) => {
     return {
         sending: state.datetimeReducer.sendingBooking,
