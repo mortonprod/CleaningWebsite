@@ -1,80 +1,112 @@
 ﻿import * as React from 'react';
+//import styleable from '../utils/myStyleable/index';
 ///import { ReactCSSTransitionGroup } from 'react-addons-css-transition-group';
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group') // ES5 with npm
+const ReactCSSTransitionGroup = require('react-addons-css-transition-group') // ES5 with npm
 const Rating = require('react-rating');
 import "animate.css"
+//const css = require("./reviews/index.css");
 //import 'react-bootstrap-star-rating/example/star-rating.min.css';
 interface state {
 }
 interface review { name: string, stars: number, message: string }
+/**
+ * @interface
+ * @params {Object} reviews A list of the reviews to show.
+ * @params {Function} submit Pass a single review of the same format.
+ * @params {string} title This is the title. 
+ * @params {string} titleStyle Add new styles to title.
+ * @params {number} initialStars Initial stars on review to submit.
+ * @params {Function} showHandler Ask for more reviews.
+ * @params {Boolean} showMoreButton Should we show the more button?
+ * @params {Boolean} showFewerButton Should we show the fewer button?
+ */
 interface props {
-    reviews: Array<review>,
-    submit: any,
+    reviews?: Array<review>,
+    submit?: any,
+    userName?:string,
+    title?:string,
     titleStyle?: string,
     initialStars?: number,
-    moreHandler?: Function,
-    showHandler?:Function
+    showHandler?: Function,
+    showMoreButton?: Boolean,
+    showFewerButton?: Boolean
 }
-
-export default class Reviews extends React.Component<props, state> {
+/**
+ * @class
+ * This presentational class will present all the reviews given to it.
+ * Can easily update styles and what each part says. 
+ * Attach callback function to give actions to each button.
+ */
+export  default class Reviews extends React.Component<props, state> {
     constructor(props: any) {
         super(props);
     }
-    noMoreReviews = false;
     static defaultProps = {
         reviews: [] as any,
         submit: null as any,
+        username:"Stranger",
+        title: "Reviews",
         titleStyle: "",
         initialStars: 5,
-        moreHandler: null as any
+        showHandler: null as any,
+        showMoreButton: true,
+        showFewerButton:true
     }
     ctrls: {
         message?: HTMLTextAreaElement;
     } = {};
-    componentWillMount() {
-    }
-    submitHandler() {
+    /**
+     * @function
+     * Submit function which will connect to props function or perform default behaviour
+     */
+    submit(rev: review) {
+        if (typeof this.props.submit !== null) {
+            this.props.submit(rev)
+        } else {
+            console.log("You need to add submit handler.")
+        }
     }
     rateChange(rate: number) {
         console.log("rate change " + rate)
     }
-    addHandler() {
-    }
-    moreHandler() {
-        if (typeof this.props.showHandler !== "undefined") {
-            this.props.showHandler(true)
+    showHandler(more: Boolean) {
+        console.log("show handler: " + more + "   " + this.props.showHandler);
+        if (this.props.showHandler !== null) {
+            this.props.showHandler(more)
+        } else {
+            console.log("You need to add show handler.")
         }
-    }
-    lessHandler(){
-        if (typeof this.props.showHandler !== "undefined") {
-            this.props.showHandler(false)
-        }
-    }
-    componentWillUpdate(nextProps: props, nextState:state){
-        //console.log("before/after :" + nextProps.reviews.length + " " + this.props.reviews.length);
-        //if(nextProps.reviews.length === this.props.reviews.length){
-        if(nextProps.reviews.length > 10){
-            this.noMoreReviews = true;
-        }else{
-            this.noMoreReviews = false;
-        }
-    }   
+    }  
     render() {
-        let moreLess:any;
-        if(this.noMoreReviews){
-            moreLess = (
-                <div>
-                    <h2>No More Reviews</h2>
-                    <button onClick={this.lessHandler.bind(this)} className="btn btn-success btn-lg">See Fewer Reviews</button>
-                </div>
-            )
+        let moreLess: any;
+        if (this.props.showMoreButton === true) {
+            if (this.props.showFewerButton === true) {
+                moreLess = (
+                    <div>
+                        <button onClick={() => { this.showHandler(true) } } className="btn btn-success btn-lg">More</button>
+                        <button onClick={() => { this.showHandler(false) } } className="btn btn-success btn-lg">Fewer</button>
+                    </div>
+                )
+            } else {
+                moreLess = (
+                    <div>
+                        <button onClick={() => { this.showHandler(false) } } className="btn btn-success btn-lg">Fewer</button>
+                    </div>
+                )
+            }
         }else{
-            moreLess = (
-                <div>
-                    <button onClick={this.moreHandler.bind(this)} className="btn btn-success btn-lg">See More Reviews</button>
-                    <button onClick={this.lessHandler.bind(this)} className="btn btn-success btn-lg">See Fewer Reviews</button>
-                </div>
-            )
+            if (this.props.showFewerButton === true) {
+                moreLess = (
+                    <div>
+                        <button onClick={() => { this.showHandler(false) } } className="btn btn-success btn-lg">Fewer</button>
+                    </div>
+                )
+            } else {
+                moreLess = (
+                    <div>
+                    </div>
+                )
+            }
         }
 
 
@@ -92,11 +124,9 @@ export default class Reviews extends React.Component<props, state> {
                 </div>
             );
         }
-        console.log("style: " + this.props.titleStyle);
-        console.log("initial stars: " + this.props.initialStars);
         return (
             <div  className="row text-center">
-                <h1 className={this.props.titleStyle}>Give us a review</h1>
+                <h1 className={this.props.titleStyle}>{this.props.title}</h1>
                 <form name="sentMessage" id="contactForm" noValidate>
                     <div className="row control-group">
                         <div className="form-group col-xs-12 floating-label-form-group controls">
@@ -109,7 +139,7 @@ export default class Reviews extends React.Component<props, state> {
                     <div id="success"></div>
                     <div className="row">
                         <div className="col-xs-12">
-                            <button onClick={this.submitHandler.bind(this)} className="btn btn-success btn-lg">Send!!!</button>
+                            <button onClick={() => { this.submit }} className="btn btn-success btn-lg">Send!!!</button>
                         </div>
                     </div>
                 </form>
