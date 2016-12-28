@@ -7,10 +7,10 @@ console.log("NOD_ENV: " + process.env.NODE_ENV);
 if (process.env.NODE_ENV === "development") {
     var webpack = require('webpack');
     var WebpackDevServer = require('webpack-dev-server');
-    var config = require('../../../../webpack.config.js'); ///Called from dist folder!!!!
+    var config = require('../../../webpack.config.js'); ///Called from dist folder!!!!
     config.plugins.push(new webpack.HotModuleReplacementPlugin())
     config.entry.index.unshift("webpack-dev-server/client?http://localhost:8081/", "webpack/hot/dev-server");
-    config.entry.vendor.unshift("webpack-dev-server/client?http://localhost:8081/", "webpack/hot/dev-server");
+    config.entry.login.unshift("webpack-dev-server/client?http://localhost:8081/", "webpack/hot/dev-server");
     var proxy = require('proxy-middleware');
     var url = require('url');
 }
@@ -21,12 +21,12 @@ module.exports = function (app: any, passport: any) {
     pages(router);
     if (process.env.NODE_ENV === "development") {
         var server = new WebpackDevServer(webpack(config), {
-            contentBase: "../../../public/",
+            contentBase: "./dist",
             hot: true,
             quiet: false,
             noInfo: false,
-            publicPath: "/bundle/",
-            stats: { colors: true }
+            publicPath: "/bundle",
+            stats: { colors: true } 
         });
         server.listen(8081, "localhost", function () { });
         app.use('/bundle', proxy(url.parse('http://localhost:8081/bundle')));

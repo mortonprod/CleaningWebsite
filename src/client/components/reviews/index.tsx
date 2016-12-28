@@ -1,10 +1,6 @@
 ﻿///File contact - the link between the contact actions and presentation.
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Provider, connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import ReviewsPresentation from '../components/reviewsPresentation';
-import sendReviewToServer from '../actions/reviewsAction';
+import ReviewsPresentation from './reviewsPresentation';
 interface review { name: string, stars: number, message: string }
 
 interface props {
@@ -18,7 +14,7 @@ interface state {
     reviewsToPass: Array<review>
 
 }
-class Reviews extends React.Component<props, state> {
+export class Reviews extends React.Component<props, state> {
     constructor(props: any) {
         super(props);
     }
@@ -170,26 +166,3 @@ class Reviews extends React.Component<props, state> {
         );
     }
 }
-/**
- * @function
- * Connect the reviews from the store.
- * @param state
- * @param ownProps
- */
-const mapStateToProps = (state: any, ownProps: any) => {
-    return {
-        reviews: state.reviewsReducer.reviews
-    }
-}
-/**
- * @function
- * Connect the submit action
- * @param dispatch
- * @param ownProps
- */
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
-    return {
-        submit: bindActionCreators(sendReviewToServer, dispatch)
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Reviews);

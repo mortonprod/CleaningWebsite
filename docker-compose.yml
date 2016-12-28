@@ -1,0 +1,20 @@
+﻿#Build specifies to use the docker file in this directory.
+#Must create mongodb image before running.
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+     - "3000:8080"#Connect host port 3000 to node port 8080
+    volumes:
+     - .:/code
+    links: #Links db service(like web) to database name.It then is accessed via url. 
+     - "db:database"
+	 depends_on:
+	  - "db_instance"#Specify to create db instance before we create node
+  db: 
+    build: "./db" #Use docker file in this directory to create mongdb image. 
+    image: "mongodb"
+    volumes:
+     - ./db/store:/data/db #links host ./db/store to default mongodb location.
+    container_name: db_instance  #Specify a single db mongodb instance to be built

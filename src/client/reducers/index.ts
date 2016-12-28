@@ -2,50 +2,9 @@
 import { combineReducers } from 'redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import DateTimes from "../utils/datetime";
 import actionNames from "../actions/actionNames";
 
-//let holder: Array<DateTimes> = [];
-//let holder2: Array<string> = [];
-//let holder3: Array<moment.Moment> = [];
-interface IInitialState {
-    user: {
-        name: {
-            first: string,
-            second: string
-        },
-        email: string,
-        address: string,
-        phoneNumber: string,
-        datesAndTimes: Array<moment.Moment>,
-        reviews: any,
-        messages: Array<string>
-    },
-    login: {
-        sending: Boolean,
-        errorMessage: Boolean
-    },
-    signup: {
-        sentPassed: Boolean,
-        setSending: Boolean
-    }
-    contact: {
-        message: string,
-        helpMessage: string,
-        sendingMessage: Boolean
-    },
-    datetime: {
-        newBookings: Array<moment.Moment>,
-        allDatesAndTimes: Array<moment.Moment>,
-        sending: Boolean
-    },
-    reviews: {
-        reviewsList: any,
-        showNumber: number,
-        sendingReview: Boolean
-    }
-}
-const initialState = <IInitialState>{
+const initialState = <IState>{
     user: {
         name: {
             first: null,

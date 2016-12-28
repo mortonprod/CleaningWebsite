@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 //import styleable from '../utils/myStyleable/index';
 ///import { ReactCSSTransitionGroup } from 'react-addons-css-transition-group';
-const ReactCSSTransitionGroup = require('react-addons-css-transition-group') // ES5 with npm
+//const ReactCSSTransitionGroup = require('react-addons-css-transition-group') // ES5 with npm
 const Rating = require('react-rating');
 //const css = require("./reviews/index.css");
 //import 'react-bootstrap-star-rating/example/star-rating.min.css';
@@ -144,12 +144,6 @@ export  default class Reviews extends React.Component<props, state> {
                 </form>
                 <div className="row">
                     <div className="panel-group">
-                        <ReactCSSTransitionGroup
-                            transitionName="example"
-                            transitionEnterTimeout={500}
-                            transitionLeaveTimeout={300}>
-                            {list}
-                        </ReactCSSTransitionGroup>
                     </div>
                     <div className="col-xs-12">
                         {moreLess}
@@ -159,3 +153,10 @@ export  default class Reviews extends React.Component<props, state> {
         );
     }
 }
+
+                        //<ReactCSSTransitionGroup
+                        //    transitionName="example"
+                        //    transitionEnterTimeout={500}
+                        //    transitionLeaveTimeout={300}>
+                        //    {list}
+                        //</ReactCSSTransitionGroup>

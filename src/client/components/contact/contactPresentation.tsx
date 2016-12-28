@@ -1,5 +1,4 @@
 ﻿import * as React from 'react';
-//var Spinner = require('react-spinkit');
 interface props {
     name: string,
     email: string,
@@ -9,10 +8,7 @@ interface props {
     sending: Boolean,
 
 }
-/**
- * @class
- * Presentational component of contact. This is a pure component.
- */
+
 export default class ContactPresentation extends React.Component<props, {}> {
     constructor(props: any) {
         super();

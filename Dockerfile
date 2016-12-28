@@ -5,9 +5,9 @@ COPY . .
 WORKDIR .
 
 # Expose container port
-ENV PORT=8080
-EXPOSE $PORT
+#ENV PORT=8080
+#EXPOSE $PORT
 
 # Install npm dependencies and run application
 RUN npm install
-CMD [ "npm", "run" , "start:dev" ]
+CMD [ "npm", "run" , "start" ]

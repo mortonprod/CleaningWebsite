@@ -1,9 +1,6 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
+﻿/// <reference path="../../../../typings/index.d.ts" />
 import * as React from 'react';
 import * as Datetime from "react-datetime";
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import sendBooking from '../actions/datetimeAction';
 
 //var Spinner = require('react-spinkit');
 interface state {
@@ -21,7 +18,7 @@ interface props {
  * @class
  * Implementation of DateTime component
  */
-class DateTime extends React.Component<props, state> {
+export class DateTime extends React.Component<props, state> {
     constructor(props: any) {
         super(props);
     }
@@ -149,18 +146,3 @@ class DateTime extends React.Component<props, state> {
         );
     }
 }
-const mapStateToProps = (state: any, ownProps: any) => {
-    return {
-        sending: state.datetimeReducer.sendingBooking,
-        sentSuccess: state.datetimeReducer.sentBooking,
-        inValidDatesAndTimes: state.datetimeReducer.allDatesAndTimes,
-        yourDatesAndTimes: state.datetimeReducer.yourDatesAndTimes
-    }
-}
-
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
-    return {
-        sendBooking: bindActionCreators(sendBooking, dispatch)
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(DateTime);

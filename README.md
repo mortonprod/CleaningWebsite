@@ -8,7 +8,34 @@ React component are based on stateless presentation(components folder) and state
 Container may be needed in client bundles or server side rendering.
 
 State is a single redux store created from defining actions and reducers. Store is needed for client bundle and server side rendering.
+The initial store must come from the database and any change must update it.
 
+The database is one container and node another. CRUD operations are exposed to node container.
+
+Docker compose sets up the enviroment. The database is mounted as volume and data is persistant.
+
+The app is hydrated from the database and the components initialised with parameters set to null.
+
+###Division of Concerns
+Production
+1. Node express middleware 
+	* Passport
+	* Pug template engine
+	* Client components
+2. Database 
+	* Mongodb create as separate container
+	* Hydrates app and update on redux store change.
+
+###Connections
+	Build files are always placed in html page.
+	Html page must be complete when rendered by browser
+		* Must have all HTML tags and styles for first paint.
+			* Rendered by template engine.
+		* Must begin to get data and attach event handlers.
+			*  
+
+ 
+	 
   
 
 ##How to run 
