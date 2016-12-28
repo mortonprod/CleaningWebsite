@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-var Spinner = require('react-spinkit');
+//var Spinner = require('react-spinkit');
 interface props {
     name: string,
     email: string,
@@ -35,7 +35,7 @@ export default class ContactPresentation extends React.Component<props, {}> {
         let comp: any;
         if (this.props.sending) {
             comp = (
-                <Spinner spinnerName='chasing-dots' />
+                <div></div>
             )
         } else {
             comp = (

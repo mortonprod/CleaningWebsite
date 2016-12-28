@@ -2,6 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import "../sass/site.scss";
+import "animate.css";
 import "../images/mudCrop.png";
 import * as React from 'react';
 import { Component } from 'react';

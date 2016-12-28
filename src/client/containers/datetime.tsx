@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import sendBooking from '../actions/datetimeAction';
 
-var Spinner = require('react-spinkit');
+//var Spinner = require('react-spinkit');
 interface state {
     currentMoment: moment.Moment,
     listOfMoments: Array<moment.Moment>
@@ -92,9 +92,6 @@ class DateTime extends React.Component<props, state> {
     render() {
         let comp: any;
         if (this.props.sending) {
-            comp = (
-                <Spinner spinnerName='chasing-dots' />
-            )
         } else {
             let curDis: any
             if (this.state.currentMoment !== null) {

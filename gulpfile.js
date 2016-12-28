@@ -20,7 +20,7 @@ gulp.task('watchPug', function () {
 
 
 gulp.task('clientBundle', shell.task([
-    'webpack',
+    'webpack -p'
 ]))
 
 gulp.task('clientAndServer', [], function () {

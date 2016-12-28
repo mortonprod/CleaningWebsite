@@ -3,7 +3,6 @@
 ///import { ReactCSSTransitionGroup } from 'react-addons-css-transition-group';
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group') // ES5 with npm
 const Rating = require('react-rating');
-import "animate.css"
 //const css = require("./reviews/index.css");
 //import 'react-bootstrap-star-rating/example/star-rating.min.css';
 interface state {

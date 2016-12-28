@@ -10,12 +10,14 @@
   "author": "Alexander Morton <mortonprod@gmail.com>",
   "homepage": "https://github.com/mortonprod/CleaningWebsite",
   "scripts": {
-    "test": "jest",
-    "build": "gulp",
-    "build:watch": "gulp watch",
-    "start": "set NODE_ENV=production&&node dist/src/server/index.js",
-    "start:dev": "set NODE_ENV=development&&node dist/src/server/index.js",
-    "start:dev:debug": "set NODE_ENV=development&&devtool dist/src/server/index.js"
+    "prod:all": "set NODE_ENV=production&&gulp",
+    "prod:client": "set NODE_ENV=production&&gulp clientBundle",
+    "prod:server": "set NODE_ENV=production&&gulp clientAndServer",
+    "prod:start": "set NODE_ENV=production&&node dist/src/server/index.js",
+    "dev:test": "jest",
+    "dev:pug": "set NODE_ENV=development&&gulp watchPug",
+    "dev:client": "set NODE_ENV=development&&node dist/src/server/index.js",
+    "dev:server": "set NODE_ENV=development&&devtool dist/src/server/index.js"
   },
   "dependencies": {
     "affix": "^1.0.15",
@@ -36,6 +38,8 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
+    "preact": "^7.1.0",
+    "preact-compat": "^3.9.4",
     "promises": "^0.2.5",
     "pug": "^2.0.0-beta6",
     "react": "^15.3.2",
@@ -52,6 +56,8 @@
     "ts-promise": "^0.3.4"
   },
   "devDependencies": {
+    "autoprefixer": "^6.6.0",
+    "compression-webpack-plugin": "^0.3.2",
     "css-loader": "^0.23.1",
     "es6-promise-loader": "^1.0.1",
     "exports-loader": "^0.6.3",
