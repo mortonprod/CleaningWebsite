@@ -1,9 +1,12 @@
 ﻿/// @file entry of server.
+var http = require('http');
+const http2 = require('http2');
 import * as express from 'express';
 import * as path from 'path'
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
+import * as fs from "fs";
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 var flash = require('connect-flash');
@@ -11,6 +14,9 @@ var flash = require('connect-flash');
 import passportStrategy from "./config/passport";
 let passport = passportStrategy();
 var app = express();
+///
+require('express-http2-workaround')({ express: express, http2: http2, app: app });
+///
 console.log("Static :" + path.join(__dirname, "..", "assets"))
 app.use(express.static(path.join(__dirname, "..", "assets")));
 //app.use(express.favicon());
@@ -36,5 +42,22 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 require('./routes/index')(app, passport);
-app.set('port', process.env.PORT || 8080);
-app.listen(app.get('port'));
+//app.set('port', process.env.PORT || 8080);
+//app.listen(app.get('port'));
+var options = {
+    key: fs.readFileSync('./ssl/localKey.key'),
+    cert: fs.readFileSync('./ssl/localKey.crt')
+};
+http2.createServer(options, app).listen(433, (error) => {
+    if (error) {
+        console.error(error)
+        return process.exit(1)
+    } else {
+        console.log('Listening on port: ' + 433 + '.')
+    }
+});
+
+
+http.Server(app).listen(80, function () {
+    console.log("Express HTTP/1 server started");
+});

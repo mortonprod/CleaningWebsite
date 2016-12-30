@@ -190,6 +190,37 @@ We need a unique domain name for this to work. So the SSL company knows the corr
 We want to include this via a proxy server
 To see open ports: sudo netstat -lptu
 
+Use automatic site given below for on server and for local development:https://hub.docker.com/r/centurylink/openssl/
+docker run --rm -e COMMON_NAME=localName -e KEY_NAME=localKey -v ~/ssl/:/certs centurylink/openssl
+Need to run:docker run --rm -e COMMON_NAME=localName -e KEY_NAME=localKey -v /c/Users/alexander/Documents/"Visual Studio 2015"/Projects/Projects_CleanDir/clean/ssl/:/certs centurylink/openssl
+Note local path does not work. Could be due to space in "visual studios 2015"
+
+##http2
+Features:
+Each request/response has unique id(stream id) and split into frames pass via single TCP connection.  
+	* multiplexing: Multiple asynchronous requests over single TCP connection.
+	* Server push: Multiple multiple responses per single request.
+2. Request priority
+3. Compress header(content compression?)
+4. Binary protocol?
+
+Difference with preload:
+*Preload works the same as push but you must get the html page and parse each preload and setup http2 requests. 
+See server push:https://www.w3.org/TR/preload/#server-push-http-2
+ 
+What you need to know:http://qnimate.com/what-is-multiplexing-in-http2/
+It's all about streams. In http you have to make one request over TCP connection at a time. Http2 uses streams to identify multiple downloads at a single time.
+
+
+  
+
+To use http2 with express and not having to work with spdy(old google version, not really support now).
+Preload will specifiy to create a stream with server over the specified url. 
+This must always be a static asset. Since it must be specied on page. 
+
+Streams:https://www.sitepoint.com/basics-node-js-streams/
+
+
 #Bash and vim.
 ctrl Z to stop process and fg to bring it back.
 y>> yank vim 
@@ -287,12 +318,14 @@ Need absolute path for all docker volumes.
 cheapname site sometime just does not do stuff! Just sign in again.
 Don't dns redirect just use "A record" for dns name ot IP.
 Dont be in detached mode to run in interactive:works>>docker run -it  -p 443:80 --name nginx nginx /bin/bash 
+Preload works the same as push but you must get the html page and parse each preload and setup http2 requests. 
 
 ##Terminology
 domain >> Just the name
 A top-level domain, or TLD .net .com etc... <<< DNS works in a hierarchy to ubuntu.com is sub domain of com.
 hosts: www.examples.com or api.examples.com.  example.com is the bare domain. Host defines resource.
 txt is text record attached to dns resolved
+Sprite file: All images as one passed to client. Used with http since request response is so long.  No longer an issue with http2.
 
 TXT old:v=spf1 include:spf.efwd.registrar-servers.com ~all
 
