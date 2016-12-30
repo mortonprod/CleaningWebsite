@@ -1,4 +1,10 @@
 ﻿import * as React from 'react';
+let Spinner: any = null;
+if (typeof window === "undefined") {
+    console.log("On server do not include component with css")
+} else {
+    let Spinner = require('react-spinkit');
+}
 interface props {
     name: string,
     email: string,
@@ -31,7 +37,7 @@ export default class ContactPresentation extends React.Component<props, {}> {
         let comp: any;
         if (this.props.sending) {
             comp = (
-                <div></div>
+                <Spinner spinnerName='double-bounce'/>
             )
         } else {
             comp = (

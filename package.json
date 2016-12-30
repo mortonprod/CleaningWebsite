@@ -35,7 +35,6 @@
     "moment": "^2.15.2",
     "mongoose": "^4.7.5",
     "mysql": "^2.11.1",
-    "ng2-bootstrap": "^1.0.24",
     "nodemailer": "^2.6.4",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",

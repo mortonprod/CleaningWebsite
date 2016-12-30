@@ -6,21 +6,15 @@ interface props {
     sending: any
 }
 export class Login extends React.Component<props, {}> {
-    sendingClass = "";
     constructor(props: any) {
         super(props);
     }
     componentWillUpdate() {
-        if (this.props.sending) {
-            this.sendingClass = "sending"
-        } else {
-            this.sendingClass = ""
-        }
     }
     render() {
         return (
-            <div className={this.sendingClass}>
-                <LoginPresentation submitHandler={(form: { email: string, password: string }) => this.props.sendLoginDetailsToServer(form.email,form.password)}/>
+            <div>
+                <LoginPresentation sending={this.props.sending} submitHandler={(form: { email: string, password: string }) => this.props.sendLoginDetailsToServer(form.email,form.password)}/>
             </div>
         );
     }

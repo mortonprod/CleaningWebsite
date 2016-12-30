@@ -1,6 +1,5 @@
 ﻿/// <reference path="../../../typingsMine/index.d.ts" />
-import { combineReducers } from 'redux';
-import { createStore, applyMiddleware } from 'redux';
+import { combineReducers,createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import actionNames from "../actions/actionNames";
 

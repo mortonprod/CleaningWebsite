@@ -1,6 +1,13 @@
 ﻿/// <reference path="../../../../typings/index.d.ts" />
 import * as React from 'react';
 import * as Datetime from "react-datetime";
+let Spinner: any = null;
+if (typeof window === "undefined") {
+    console.log("On server do not include component with css")
+} else {
+    let Spinner = require('react-spinkit');
+}
+
 
 //var Spinner = require('react-spinkit');
 interface state {
@@ -89,6 +96,9 @@ export class DateTime extends React.Component<props, state> {
     render() {
         let comp: any;
         if (this.props.sending) {
+            comp = (
+                <Spinner spinnerName='double-bounce'/>
+            )
         } else {
             let curDis: any
             if (this.state.currentMoment !== null) {

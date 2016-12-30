@@ -23,6 +23,7 @@ mongoose.connect('mongodb://database:27017', {}, function (err) {
         console.log("No DB found")
     } else {
         app.use(session({ secret: 'keyboard cat', store: new MongoStore({ mongooseConnection: mongoose.connection }) }));
+        console.log("DB found")
     }
 });
 app.use(passport.initialize());

@@ -1,13 +1,14 @@
 ﻿FROM node:latest
+#Create new directory in node enviroment.
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-# Copy project files and change working directory
-COPY . .
-WORKDIR .
-
+COPY ./dist /usr/src/app/dist
 # Expose container port
-#ENV PORT=8080
-#EXPOSE $PORT
+ENV PORT=8080
+EXPOSE $PORT
 
 # Install npm dependencies and run application
+COPY package.json /usr/src/app/
 RUN npm install
-CMD [ "npm", "run" , "start" ]
+CMD [ "npm", "run" , "prod:start" ]

@@ -1,10 +1,5 @@
 ﻿import * as React from 'react';
-//import styleable from '../utils/myStyleable/index';
-///import { ReactCSSTransitionGroup } from 'react-addons-css-transition-group';
-//const ReactCSSTransitionGroup = require('react-addons-css-transition-group') // ES5 with npm
 const Rating = require('react-rating');
-//const css = require("./reviews/index.css");
-//import 'react-bootstrap-star-rating/example/star-rating.min.css';
 interface state {
 }
 interface review { name: string, stars: number, message: string }
@@ -78,8 +73,8 @@ export  default class Reviews extends React.Component<props, state> {
     }  
     render() {
         let moreLess: any;
-        if (this.props.showMoreButton === true) {
-            if (this.props.showFewerButton === true) {
+        if (this.props.showMoreButton) {
+            if (this.props.showFewerButton) {
                 moreLess = (
                     <div>
                         <button onClick={() => { this.showHandler(true) } } className="btn btn-success btn-lg">More</button>
@@ -94,7 +89,7 @@ export  default class Reviews extends React.Component<props, state> {
                 )
             }
         }else{
-            if (this.props.showFewerButton === true) {
+            if (this.props.showFewerButton) {
                 moreLess = (
                     <div>
                         <button onClick={() => { this.showHandler(false) } } className="btn btn-success btn-lg">Fewer</button>
@@ -107,8 +102,6 @@ export  default class Reviews extends React.Component<props, state> {
                 )
             }
         }
-
-
         var list: Array<any> = [];
         for (let i = 0; i < this.props.reviews.length; i++) {
             list.push(
@@ -144,6 +137,7 @@ export  default class Reviews extends React.Component<props, state> {
                 </form>
                 <div className="row">
                     <div className="panel-group">
+                        {list}
                     </div>
                     <div className="col-xs-12">
                         {moreLess}
