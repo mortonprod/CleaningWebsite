@@ -2,6 +2,27 @@
 
 A progressive web app for a cleaning business.  The website has isomorphic react front end with node backend. 
 
+##Building the components
+Webpack dev server is a nightmare. So a boiler plate is used which will take components to render. 
+A symbolic link is useful here. 
+MKLINK /D C:\Users\alexander\Documents\"Visual Studio 2015"\Projects\Projects_CleanDir\clean\react-hot-boilerplate\src\comp C:\Users\alexander\Documents\"Visual Studio 2015"\Projects\Projects_CleanDir\clean\src\client\components\contact\comp
+Must run as administrator!
+to delete run rmdir or rm for directory and files(Act on link)
+
+Note difference between hard and soft link. Hard will create another directory pointing to resource(inode).
+A soft link will point to directory which will point to the directory which points to the resource.
+
+THIS DOES NOT WORK SINCE WEBPACK NEEDS TO KNOW THE FILES TO WATCH. ALSO WE NEED TO COMPILE FOR TYPESCRIPT NOT BABEL 
+
+##Polyfill 
+To use es6 features in es6 you need the es6-shim.js and the typings(Assign is an example).
+The typings provide the interface the es6-shim.js provider the functionality. 
+npm install es6-shim
+and 
+typings install dt~es6-shim --global --save
+
+The include in file with "require('es6-shim')" in any top file to replace all missing things
+
 ##Setup 
 
 React component are based on stateless presentation(components folder) and stateful containers(containers folder).
@@ -34,9 +55,18 @@ Production
 		* Must begin to get data and attach event handlers.
 			*  
 
- 
+ #db
+ Follow this:https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
+Networking: mongodb is the compose image name. db is the service name in compose(like web!) then default port
+
 	 
-  
+docker run -d -p 27017:27017 --name mongodb_instance   mortonprod/mongodb
+Now we need to connect to app.
+docker network ls
+docker network inspect bridge
+##iptable
+
+This controls the input, forward,output of from   
 
 ##How to run 
 
@@ -78,7 +108,7 @@ You will need github and node installed. For smoothtransition jquery must be old
 ### Installing
 
 
-## Running the tests
+## Tests
 
 The tests are run with jest
 
@@ -220,6 +250,73 @@ This must always be a static asset. Since it must be specied on page.
 
 Streams:https://www.sitepoint.com/basics-node-js-streams/
 
+##Service workers
+These act as middle man between browser server and some cache.
+https://24ways.org/2016/http2-server-push-and-service-workers/
+
+You want webpack to create a service worker(service.worker.js) file in dist for you which will 
+1. link to all your bundles by url. 
+2. Add code to check cache or request etc... 
+
+##Building it.
+
+Src is composed of 4 parts:
+1.bundle
+2.client
+3.server
+4.dev server
+	*Follow:https://webpack.github.io/docs/webpack-dev-server.html node js Hot module replacement example.
+###Process
+There are a lot of parts here but the process of building goes like this:
+1. Push styles and javascript you want right away
+	* Do this is express route
+2. Create html using some template engine.
+	* Must contain pure html so we don't have to wait for react to script.
+	* Must contain script tag to all stream(push) urls.
+	* Must contain JSON format of full state of app; this needs to be passed somehow. This will initialise reducer on browser.
+3.Continue to load content 
+	* Precache via web worker(NO request)
+	* Using webpack to get resources if you interact with something and hit code split point.
+###design
+	http://blog.scottlogic.com/2016/02/05/a-lazy-isomorphic-react-experiment.html
+
+##React server side rendering + lazy loading + redux.
+For smooth user experience you want to deal with change DOM elements via routing to be done on browser. 
+However, the initial page loaded from the server should be rendered there. Otherwise you are waiting for 
+react to finish scripting for initial first paint. Furthermore, the initial page load can be any page on your route, 
+since SEO crawlers or even visitors via a particular url can request that page from the server.
+
+The store should never effect routing. If you need information then pass empty(dummy first view) first store and then 
+sync asynchronously on the client via ajax js. The empty store will initialise the provider on the server.
+This will be rendered on the server with the dummy store as html. The dummy store is also be passed to client so the
+the store on the client can be create(Note you need to do this twice since the store rendered on client is inside the html not in some json format).   
+
+##Client structure
+
+Redux client store and db app store are defined in a single location in index.d.ts
+Folder structure bottom to top:
+
+1. Presentation component(Just props filled from stateful component)
+2. Stateful component(props are redux store(connected))
+	* At this stage you define the global store(reducer) entry of this component which will be combined with all others
+		* Note reducer defined by component is in the same directory and should only be connected to that component via "connect". 
+		* Note the actions defined by component is in the same directory and should only be used by that component via "connnect" 
+		* Note by keeping the this convention then we can add and remove reducer as needed.
+		* Note by keeping to this convention then you can easily upgrade a reducer/action to connect to multiple components
+3. Define state/actions which effects multiple components which should be connected for all components.
+	* Example being username/email which could be used everywhere.
+	* Connect actions to components.
+	* Connect state(reducer) to components
+4.  Export 
+	* Each component connected to actions and reducer or forming a router
+	* RootReducer = globalReducer + comp0Reducer + comp1Reducer2+ ...
+5. 
+	 
+
+
+
+Therefore you must perform routing on the server and client.
+
 
 #Bash and vim.
 ctrl Z to stop process and fg to bring it back.
@@ -232,8 +329,11 @@ dd >> to delete line
 :set list << shows tab as $ character.
 ## Deployment
 ##Basic docker.
+Note you only copy files into an image if you really need it. In most cases you can just link after you have
+started process. 
 
-
+So an image should be an configurable as possible. So you run your app in enviroment defined by node_modules
+To get IP address:docker-machine ip default
 ##What to run
 
 1.Build image:docker build . --tag mortonprod/web
@@ -319,6 +419,7 @@ cheapname site sometime just does not do stuff! Just sign in again.
 Don't dns redirect just use "A record" for dns name ot IP.
 Dont be in detached mode to run in interactive:works>>docker run -it  -p 443:80 --name nginx nginx /bin/bash 
 Preload works the same as push but you must get the html page and parse each preload and setup http2 requests. 
+If react components props optional then you will get error when you attach redux store/actions
 
 ##Terminology
 domain >> Just the name
@@ -330,9 +431,235 @@ Sprite file: All images as one passed to client. Used with http since request re
 TXT old:v=spf1 include:spf.efwd.registrar-servers.com ~all
 
 
-
+#issues
+1. How to run server side rendering for react component with css included?
+2. How to remove web dev server from production build? Can remove usage but not import.
+3. How to lazy load? Need bundle loader which load syncronously in server but async on client:http://henleyedition.com/implicit-code-splitting-with-react-router-and-webpack/ 
 https://www.sitepoint.com/how-to-use-ssltls-with-node-js/
+	*Not such a big issue just push all resources for now. 
+Need mongoose in interface to use typings???!!! Move but still have error.
+You need to make children optional with react... Why???? Will this even pick up children on the other side since if child component then still error of no placed as html tag.
+
+
 sudo git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
 
 
 This is it!!!!http://www.automationlogic.com/using-lets-encrypt-and-docker-for-automatic-ssl/ 
+
+Hey All,
+
+I have read about the web development server and hot module replacement. I even got it working on another project but currently I can't access the public files served by the dev server. 
+
+Here is the web development server being setup. Note public path /bundle.
+
+    'use strict';
+    let config = require("../webpack.config.js");
+    var webpack = require('webpack');
+    var WebpackDevServer = require('webpack-dev-server');
+    config.entry.index.unshift("webpack-dev-server/client?http://localhost:8080/");
+    var compiler = webpack(config);
+    var server = new WebpackDevServer(compiler, {
+        hot: true,
+        inline: true,
+        contentBase: "./serverDev",
+        publicPath:"/bundle/"
+    });
+    server.listen(8080);
+
+
+This is the index file rendered 
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="react-router"></div>
+        <script src="/bundle/vendor.bundle.js"></script>
+        <script src="/bundle/index.js"></script>
+    </body>
+    </html>
+
+This is the webpack config with path set to public path of webpack server. 
+
+    'use strict';
+    var webpack = require('webpack');
+    const autoprefixer = require('autoprefixer');
+    var ExtractTextPlugin = require('extract-text-webpack-plugin');
+    var CompressionPlugin = require('compression-webpack-plugin');
+    const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+    let getPlugins;
+    var isProd = (process.env.NODE_ENV === 'production');
+    console.log("Production: " + isProd);
+    
+    let entryFill = {
+        index: ['./src/bundle/index.tsx'],
+    //    login: ['./src/bundle/login.tsx'],
+    //    signup: ['./src/bundle/signup.tsx'],
+        vendor: ['react', 'bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/js/bootstrap.js', 'react-dom', 'jquery', 'jquery-ui-bundle', "redux-thunk", 'redux', 'react-redux']
+    }
+    if (isProd) {
+        var publicPathFill = "./dist/assets/bundle";
+        getPlugins = function () {
+            return [
+                new SWPrecacheWebpackPlugin(
+                    {
+                        cacheId: 'cleaning-website',
+                        filename: 'service-worker.js',
+                        maximumFileSizeToCacheInBytes: 4194304,
+                        runtimeCaching: [{
+                            handler: 'cacheFirst',
+                            urlPattern: /[.]js$/
+                        }],
+                    }
+                ),
+                new ExtractTextPlugin("site.css"),
+                new webpack.optimize.UglifyJsPlugin(),
+                new webpack.optimize.OccurrenceOrderPlugin(),
+                new webpack.optimize.DedupePlugin(),
+                new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+                new webpack.optimize.AggressiveMergingPlugin(),
+                new webpack.ProvidePlugin({
+                    jQuery: 'jquery',
+                    $: 'jquery',
+                    jquery: 'jquery'
+                })
+                //new CompressionPlugin({
+                //    asset: "[path].gz[query]",
+                //    algorithm: "gzip",
+                //    test: /\.js$|\.css$|\.tsx$/,
+                //    threshold: 10240,
+                //    minRatio: 0.8
+                //})
+            ]
+        }
+    } else {
+        var publicPathFill = "/bundle/";
+        getPlugins = function () {
+            return [
+                new ExtractTextPlugin("site.css"),
+                //new Webpack.HotModuleReplacementPlugin()
+            ]
+        }
+    
+    }
+    
+    module.exports = {
+        /**
+         * Entry for all client side code.
+         * @var {object} entry
+         */
+        entry: entryFill,
+        plugins: getPlugins(),
+    
+        output: {
+            path: publicPathFill,
+            filename: '[name].js',
+            libraryTarget: 'umd'
+            //publicPath: publicPathFill
+        },
+        resolve: {
+            extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+            //alias: {
+            //    'react': 'preact-compat',
+            //    'react-dom': 'preact-compat',
+            //    'react-router': 'preact-compat'
+            //}
+    
+        },
+        module: {
+            loaders: [
+                //  { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'url?limit=10000!img?progressive=true'},
+                { test: /\.css$/, loader: "style-loader!css-loader" },
+                {
+                    test: /\.scss$/,
+                    loader: ExtractTextPlugin.extract(
+                        //Need:?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5] to set the right name for each css!
+                        "style",
+                        "css!postcss-loader!sass")
+                },
+                //  { test: /bootstrap-sass\/assets\/javascripts\//, loader: 'imports?jQuery=jquery' },
+                { test: /\.tsx?$/, loader: "ts-loader" },
+                {
+                    test: /\.(pug|png|ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+                    loader: 'file-loader'
+                }
+            ]
+        },
+        postcss: function () {
+            return [autoprefixer(
+                //    { browsers: ['ie 10', 'firefox 20', 'safari 9.1','Chrome ] }
+                { browsers: ['> 0%'] }
+            )];
+        }
+    };
+
+
+P.S: Should I be able to go to localhost:8080/bundle and see the bundle webpack has produced and served by webpack-dev-server?
+
+
+P.S.S:Note I know I have not set the public path but this does not seem to matter in my working example.
+
+
+////Streams
+
+    router.get('/streamFile', function (req: any, res: any) {
+        ///Push 
+        var isSSL = (req.socket.encrypted ? true : false);
+        if (isSSL) {
+            var index_stream = res.push('/index.js', {
+                status: 200, // optional
+                method: 'GET', // optional
+                request: {
+                    accept: '*/*'
+                },
+                response: {
+                    'content-type': 'application/javascript'
+                }
+            })
+            var vendor_stream = res.push('/vendor.js', {
+                status: 200, // optional
+                method: 'GET', // optional
+                request: {
+                    accept: '*/*'
+                },
+                response: {
+                    'content-type': 'application/javascript'
+                }
+            })
+            let index_file = fs.createReadStream('./dist/assets/bundle/index.js');
+            let vendor_file = fs.createReadStream('./dist/assets/bundle/vendor.bundle.js');
+            vendor_file.pipe(vendor_stream);
+            index_file.pipe(index_stream);
+
+            //stream.end('alert("hello from push stream!")');
+            //console.log("Encrypted!!!!!!!!!!!")
+        }
+        res.writeHead(200);
+        res.end('<div id="react-contact"></div> <script src="/vendor.js"></script> <script src="/index.js"></script>');
+    });
+    router.get('/stream', function (req: any, res: any) {
+        ///Push 
+        var isSSL = (req.socket.encrypted ? true : false);
+        if (isSSL) {
+            var stream = res.push('/test.js', {
+                status: 200, // optional
+                method: 'GET', // optional
+                request: {
+                    accept: '*/*'
+                },
+                response: {
+                    'content-type': 'application/javascript'
+                }
+            })
+            stream.end('alert("hello from push stream!")');
+            //console.log("Encrypted!!!!!!!!!!!")
+        }
+        res.writeHead(200);
+        res.end('<script src="/test.js"></script>');
+    });
+
+
+Upgrade typescript:npm install -g typescript@2.0. 
