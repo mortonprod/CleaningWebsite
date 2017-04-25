@@ -3,18 +3,19 @@
     "./index.tsx",
     "../../typings/index.d.ts",
     "../../typingsMine/index.d.ts"
-
   ],
   "compilerOptions": {
     "removeComments": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "target": "es5",
     "jsx": "react",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
   "include": [
-    "./**/*"
+    "./*",
+    "./**/*.ts",
+    "./**/*.tsx"
   ],
 
   "exclude": [
