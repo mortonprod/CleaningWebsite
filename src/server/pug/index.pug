@@ -1,15 +1,20 @@
-﻿extends ./layout.pug
- 
-block content
-  include nav.pug
-  include header.pug
-  include about.pug
-  include contact.pug
-  include dateTime.pug
-  include review.pug
-  include footer.pug
+﻿doctype html
+html(lang="en")
+  link(rel="dns-prefetch" href="https://fonts.googleapis.com")
+  link(rel="preload stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700" type="text/css")
+  link(rel="preload stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" type="text/css")
+  link(rel="preload manifest" href="/manifest.webmanifest")
+  meta(charset="utf-8")
+  meta(http-equiv="X-UA-Compatible" content="IE=edge")
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+  meta(name="description" content="A cleaning business based Balloch")
+  meta(name="author" content="Alexander Morton")
+  title Cleaning business
+  link(href="bundle/site.css" rel="stylesheet")
+  script.
+    window.__PRELOADED_STATE__ = !{JSON.stringify(state)}
+body
+  div#root-router != router
+  script(src="bundle/vendor.bundle.js")
   script(src="bundle/index.js")
-
-
-
-
+  link(rel="icon" href="/images/favicon.png")
