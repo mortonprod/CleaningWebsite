@@ -1,20 +1,35 @@
-﻿#Build specifies to use the docker file in this directory.
-#Must create mongodb image before running.
-version: '2'
+﻿version: '2'
 services:
+  nginx:
+    build: ./nginx
+    command: nginx -g 'daemon off;'
+    image: mortonprod/nginx
+    mem_limit: 2g
+    cpu_shares: 256
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "27017:433"
+    depends_on:
+      - app
   db: 
     build: "./db" #Use docker file in this directory to create mongdb image. 
     image: "mortonprod/mongodb"
     volumes:
-     - ./db/store:/data/db #links host ./db/store to default mongodb location.
-  web:
+      - /data/db #links host ./db/store to default mongodb location.
+    #ports:
+    #- 27017 #Any container can link to this.
+  app:
     build: .
-    image: "mortonprod/web"
-    ports:
-     - "3000:8080"#Connect host port 3000 to node port 8080
+    command: npm run prod:start
+    image: "mortonprod/app"
     volumes:
-     - ./dist:/usr/src/app/dist
-    links: #Links db service(like web) to database name.It then is accessed via url. 
-     - "db:database"
+      - ./dist:/usr/src/app/dist #Attach our file into our node enviroment.
+      - ./node_modules:/usr/src/app/node_modules 
+      - ./ssl:/usr/src/app/ssl
+    ports:
+      - "433:433"
+    #links: #Links db service(like web) to database name.It then is accessed via url. 
+    # - "db:db" #outside:inside
     depends_on:
       - db #Specify to create db instance before we create node
