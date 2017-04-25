@@ -1,6 +1,6 @@
-﻿declare interface ObjectConstructor {
-    assign(target: any, ...sources: any[]): any;
-}
+﻿//declare interface ObjectConstructor {
+//    assign(target: any, ...sources: any[]): any;
+//}
 declare interface JQuery {
     smoothState(target: Object): any;
     affix(target: Object): any;
@@ -8,12 +8,18 @@ declare interface JQuery {
 
 }
 
+//interface NodeRequire {
+//    ensure: (paths: string[], callback: (require: <T>(path: string) => T) => void) => void;
+//}
 
-interface Window { __PRELOADED_STATE__: any; }
 
+interface Window { __REDUX_STATE__: any; }
 
-interface IState {
-    user: {
+/**
+  * Define the state for the app which is used in the reducer on client and db on server.
+  */
+interface IGlobal {
+    globalReducer: {
         name: {
             first: string,
             second: string
@@ -24,28 +30,42 @@ interface IState {
         datesAndTimes: Array<moment.Moment>,
         reviews: any,
         messages: Array<string>
-    },
-    login: {
-        sending: Boolean,
-        errorMessage: Boolean
-    },
-    signup: {
-        sentPassed: Boolean,
-        setSending: Boolean
-    }
-    contact: {
-        message: string,
-        helpMessage: string,
-        sendingMessage: Boolean
-    },
-    datetime: {
-        newBookings: Array<moment.Moment>,
-        allDatesAndTimes: Array<moment.Moment>,
-        sending: Boolean
-    },
-    reviews: {
-        reviewsList: any,
-        showNumber: number,
-        sendingReview: Boolean
     }
 }
+interface ILogin {
+    loginReducer: {
+        login: {
+            sending: Boolean,
+            errorMessage: Boolean
+        }
+    }
+}
+interface IContact {
+    contactReducer: {
+        contact: {
+            message: string,
+            helpMessage: string,
+            sendingMessage: Boolean
+        }
+    }
+}
+interface IDatetime {
+    datetimeReducer: {
+        datetime: {
+            newBookings: Array<moment.Moment>,
+            allDatesAndTimes: Array<moment.Moment>,
+            sending: Boolean
+        }
+    }
+}
+interface IReview {
+    reviewReducer: {
+        reviews: {
+            reviewsList: any,
+            showNumber: number,
+            sendingReview: Boolean
+        }
+    }
+}
+interface IComp extends ILogin, IReview, IDatetime, IContact { }
+interface IState extends IGlobal, ILogin, IReview, IDatetime, IContact { }
