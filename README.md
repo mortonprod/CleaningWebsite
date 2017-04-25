@@ -1,72 +1,109 @@
-﻿# A cleaning business
+﻿#A cleaning business
 
-A progressive web app for a cleaning business.  The website has isomorphic react front end with node backend. 
+A progressive web app for a cleaning business. The website has isomorphic react front end, with node backend,
+ and deployed using docker. 
+The app is deployed along side other apps;Nginx keeps future deployment scalable by acting as a proxy server 
+for multiple domains and other various requests. 
 
-##Building the components
-Webpack dev server is a nightmare. So a boiler plate is used which will take components to render. 
-A symbolic link is useful here. 
-MKLINK /D C:\Users\alexander\Documents\"Visual Studio 2015"\Projects\Projects_CleanDir\clean\react-hot-boilerplate\src\comp C:\Users\alexander\Documents\"Visual Studio 2015"\Projects\Projects_CleanDir\clean\src\client\components\contact\comp
-Must run as administrator!
-to delete run rmdir or rm for directory and files(Act on link)
+Docker is used to setup nginx server and then routes to all other apps through there domain names. 
+All traffic will be through HTTPS so through port 443 and through 80 for HTTPS verifications. 
 
-Note difference between hard and soft link. Hard will create another directory pointing to resource(inode).
-A soft link will point to directory which will point to the directory which points to the resource.
+##Setup
 
-THIS DOES NOT WORK SINCE WEBPACK NEEDS TO KNOW THE FILES TO WATCH. ALSO WE NEED TO COMPILE FOR TYPESCRIPT NOT BABEL 
+### Nginx server
 
-##Polyfill 
-To use es6 features in es6 you need the es6-shim.js and the typings(Assign is an example).
-The typings provide the interface the es6-shim.js provider the functionality. 
-npm install es6-shim
-and 
-typings install dt~es6-shim --global --save
+After we start the new website we want to keep the nginx server running at all times. Otherwise we will not be
+able to access the applications proxied to.  
 
-The include in file with "require('es6-shim')" in any top file to replace all missing things
+This will proxy for HTTPS tests and multiple domain names.
+Servers are split by port and domain name. Port 80 is HTTP and 443 HTTPS. 
+Once a particular port and domain name is found the url(location) is used to 
+Below we do a (301) perminant redirect if it is not the acme challenge. If https then redirect http application.
+Perminent will change how search engines list your domain for your website.
 
-##Setup 
+ ```
+server {
+  listen 80;
+  server_name my.example.org;
+ 
+  location /.well-known/acme-challenge/ {
+    root /var/www/letsencrypt;
+  }
+ 
+  location / {
+    return 301 https://$host$request_uri;
+  }
+}
+ 
+server {
+  listen 443 ssl http2;
+ 
+  ssl_certificate certs/live/my.example.org/fullchain.pem;
+  ssl_certificate_key certs/live/my.example.org/privkey.pem;
+ 
+  server_name my.example.org;
+ 
+  location / {
+    proxy_pass http://my.example.org;
+  }
+}
+``` 
+ 
 
-React component are based on stateless presentation(components folder) and stateful containers(containers folder).
-Container may be needed in client bundles or server side rendering.
+### SSL 
 
-State is a single redux store created from defining actions and reducers. Store is needed for client bundle and server side rendering.
-The initial store must come from the database and any change must update it.
+#### Local development 
 
-The database is one container and node another. CRUD operations are exposed to node container.
+We want a simple installation of the ssl certificate without the need to an authorative certificate autority. 
+OpenSSL is used to implement the SSL/TLS protocols. To simplify the process further, century link docker file was
+used to produce ssl certificate, key and CSR. You must execute run.sh this and give host/domain 
+name as COMMON_NAME. You must specify the directory to store the the ssl information. This information is then used by the 
+app to create the ssl certificate.
 
-Docker compose sets up the enviroment. The database is mounted as volume and data is persistant.
+#### Production  
+
+
+
+### The Mongo Database 
+
+The app must be attached to a running database. CRUD operations are exposed to node container.
+The database is mounted as volume which makes the data persistant.
 
 The app is hydrated from the database and the components initialised with parameters set to null.
 
-###Division of Concerns
-Production
-1. Node express middleware 
-	* Passport
-	* Pug template engine
-	* Client components
-2. Database 
-	* Mongodb create as separate container
-	* Hydrates app and update on redux store change.
+### The app
 
-###Connections
-	Build files are always placed in html page.
-	Html page must be complete when rendered by browser
-		* Must have all HTML tags and styles for first paint.
-			* Rendered by template engine.
-		* Must begin to get data and attach event handlers.
-			*  
+All app code is in src folder. This is split into three parts 
+1. Client: The react components which are rendered on server and client.
+	- React components are based on stateless presentation(components folder) and stateful containers(containers folder)
+	- Containers may be needed in client bundles or server side rendering.
+	- State is a single redux store created from defining actions and reducers.
+	- Store is needed for client bundle and server side rendering.
+	- The initial store must come from the database and any change must update it.
+2. Bundle: The javascript which will be sent to the browser
+3. Server: The server side code. 
+	- Pug used as template engine
 
- #db
- Follow this:https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
-Networking: mongodb is the compose image name. db is the service name in compose(like web!) then default port
+Passport is used as authentication.  
 
-	 
-docker run -d -p 27017:27017 --name mongodb_instance   mortonprod/mongodb
-Now we need to connect to app.
-docker network ls
-docker network inspect bridge
-##iptable
 
-This controls the input, forward,output of from   
+
+##Building the app
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+docker run -d -p 27017:27017 --name mongodb_instance   mortonprod/mongodb  
 
 ##How to run 
 
@@ -663,3 +700,15 @@ P.S.S:Note I know I have not set the public path but this does not seem to matte
 
 
 Upgrade typescript:npm install -g typescript@2.0. 
+
+http {
+        server {
+                listen 443;
+                server_name test.com;
+                location / {
+                        proxy_pass http://app;
+                        proxy_set_header Host            $host;
+                        proxy_set_header X-Forwarded-For $remote_addr;
+                }
+        }
+}
