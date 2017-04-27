@@ -4,6 +4,7 @@ var ts = require("gulp-typescript");
 gulp.task("default", ['watch'], function () {
 
 });
+gulp.task("build",['client','bundle','server','ssl','movePug','moveImg','moveManifest'])
 gulp.task('watch', function () {
     gulp.watch(['./src/client/**/*'], ['client']);
     gulp.watch(['./src/bundle/**/*'], ['bundle']);
@@ -15,20 +16,20 @@ gulp.task('watch', function () {
     gulp.watch(['./manifest.webmanifest'], ['moveManifest']);
 });
 
-gulp.task('docker', [], function () {
-    return shell.task([
-        'docker-compose up'
-    ])
-})
+//gulp.task('docker', [], function () {
+//    return shell.task([
+//        'docker-compose up'
+//    ])
+//})
 
 gulp.task('client', ['bundle'], function () {
     var tsProject = ts.createProject('./src/client/tsconfig.json');
     var tsresult = tsProject.src()
         .pipe(tsProject());
 
-    tsresult.js
+    return tsresult.js
         .pipe(gulp.dest('./dist/client'));
-    return gulp.start('docker');
+//    return gulp.start('docker');
 });
 gulp.task('bundle', [], function () {
     return shell.task([
@@ -40,18 +41,18 @@ gulp.task('server', [], function () {
     var tsresult = tsProject.src()
         .pipe(tsProject());
 
-    tsresult.js
+    return tsresult.js
         .pipe(gulp.dest('./dist/server'));
-    return gulp.start('docker');
+    //return gulp.start('docker');
 
 });
 
 
 gulp.task('ssl', [], function () {
-    gulp.src([
+    return gulp.src([
         "ssl/*"
     ]).pipe(gulp.dest('dist/assets/ssl'));
-    return gulp.start('docker');
+    //return gulp.start('docker');
 });
 
 gulp.task('movePug', function () {

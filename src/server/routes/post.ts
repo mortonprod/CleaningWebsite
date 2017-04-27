@@ -1,5 +1,4 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-import * as nodemailer from 'nodemailer'
+﻿import * as nodemailer from 'nodemailer'
 import { config }  from "../../config";
 export function post(router,passport) {
 

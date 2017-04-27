@@ -13,9 +13,11 @@
     "jsx": "react",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "lib": [ "es5","es6","dom","es2017.object"] 
   },
   "include": [
+    "./*",
     "./**/*.ts",
     "./**/*.tsx"
   ],

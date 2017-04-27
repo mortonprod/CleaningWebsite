@@ -10,7 +10,8 @@
     "target": "es5",
     "jsx": "react",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "lib": [ "es2015", "es2017", "dom" ] //So we have object.assign typings. Does not add polyfill
   },
   "include": [
     "./*",

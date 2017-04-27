@@ -27,7 +27,7 @@ interface IGlobal {
         email: string,
         address: string,
         phoneNumber: string,
-        datesAndTimes: Array<moment.Moment>,
+        datesAndTimes: any,
         reviews: any,
         messages: Array<string>
     }
@@ -52,8 +52,8 @@ interface IContact {
 interface IDatetime {
     datetimeReducer: {
         datetime: {
-            newBookings: Array<moment.Moment>,
-            allDatesAndTimes: Array<moment.Moment>,
+            newBookings: Array<any>,
+            allDatesAndTimes: Array<any>,
             sending: Boolean
         }
     }
