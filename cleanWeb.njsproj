@@ -98,7 +98,6 @@
     <Content Include="src\server\pug\old\contact.pug" />
     <Content Include="src\server\pug\old\dateTime.pug" />
     <Content Include="src\server\pug\old\footer.pug" />
-    <Content Include="src\server\pug\index\head.pug" />
     <Content Include="src\server\pug\old\header.pug" />
     <Content Include="src\server\pug\index\index.pug" />
     <Content Include="src\server\pug\index.pug" />
@@ -133,7 +132,6 @@
     <Folder Include="src\client\components\reviews\comp\" />
     <Folder Include="src\client\components\reviews\" />
     <Folder Include="src\client\components\signup\" />
-    <Folder Include="src\server\pug\index\" />
     <Folder Include="src\server\pug\old\" />
     <Folder Include="ssl\" />
     <Folder Include="typingsMine\" />
@@ -141,7 +139,6 @@
     <Folder Include="src\client" />
     <Folder Include="src\client\components" />
     <Folder Include="src\server" />
-    <Folder Include="src\server\pug" />
     <Folder Include="src\server\routes" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />

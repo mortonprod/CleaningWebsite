@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { match, Router, Route, StaticRouter } from 'react-router';
 import { createStore, bindActionCreators, applyMiddleware } from 'redux';
 import { routerReducer } from 'react-router-redux'
+import  thunkMiddleware  from 'redux-thunk'
 import * as path from 'path'
 import * as fs from "fs";
 import { Routes, RootReducer } from "../../client/index";
@@ -13,10 +14,11 @@ export function pages(router) {
 
     router.get('/*', function (req: any, res: any, next) {
         let initial = {};
+        const store = createStore(RootReducer, initial, applyMiddleware(thunkMiddleware))
         const body = ReactDOMServer.renderToString(
-            <Provider>
+            <Provider store={store}>
                 <StaticRouter location={req.url}>
-                    Routes()
+                    <Routes/>
                 </StaticRouter>
             </Provider>
         )

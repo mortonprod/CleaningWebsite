@@ -5,12 +5,12 @@ import "./sass/site.scss";
 import * as React from 'react';
 import { Component } from 'react';
 import * as reactDOM from "react-dom";
-import { LoginWithData} from "../client/index";
+//import { LoginWithData} from "../client/index";
 
 
 $(document).ready(function () {
     reactDOM.render(
-        LoginWithData(),
+        <div>Boom!</div>,
         document.getElementById("react-login")
     );
 });

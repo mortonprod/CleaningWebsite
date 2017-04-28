@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     reactDOM.render(
         <Provider>
             <BrowserRouter>
-                Routes();
+                <Routes/>;
             </BrowserRouter>
         </Provider>,
         document.getElementById('react-router')
