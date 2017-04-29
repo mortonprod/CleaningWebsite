@@ -1,3 +1,3 @@
 ﻿require('es6-shim');
-import { Routes, RootReducer } from "./components/index";
-export { Routes, RootReducer }
+import { Routes, Navigation, RootReducer } from "./components/index";
+export { Routes, Navigation, RootReducer }

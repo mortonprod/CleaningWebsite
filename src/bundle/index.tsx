@@ -13,12 +13,12 @@ import { Provider, connect } from 'react-redux';
 import { createStore, bindActionCreators, applyMiddleware } from 'redux';
 import { match, Router, Route } from 'react-router';
 import { routerReducer } from 'react-router-redux'
-import { Routes, RootReducer } from "../client/index";
+import { Routes, Navigation, RootReducer} from "../client/index";
 require("./utils/pageScroll");
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
-import "./sass/site.scss";
-import "animate.css";
+//import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/js/bootstrap.js';
+//import "./sass/site.scss";
+//import "animate.css";
 
 document.addEventListener("DOMContentLoaded", function (event) { 
     // Get initial state from window and configure initial state (just like the server)
@@ -30,6 +30,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             </BrowserRouter>
         </Provider>,
         document.getElementById('react-router')
+    );
+    reactDOM.render(
+        <Navigation/>,
+        document.getElementById('react-nav')
     );
 })
 

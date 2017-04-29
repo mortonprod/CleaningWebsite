@@ -1,6 +1,7 @@
 ﻿//declare interface ObjectConstructor {
 //    assign(target: any, ...sources: any[]): any;
 //}
+
 declare interface JQuery {
     smoothState(target: Object): any;
     affix(target: Object): any;

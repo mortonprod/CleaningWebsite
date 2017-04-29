@@ -132,6 +132,8 @@
     <Folder Include="src\client\components\reviews\comp\" />
     <Folder Include="src\client\components\reviews\" />
     <Folder Include="src\client\components\signup\" />
+    <Folder Include="src\server\pug\" />
+    <Folder Include="src\server\pug\index\" />
     <Folder Include="src\server\pug\old\" />
     <Folder Include="ssl\" />
     <Folder Include="typingsMine\" />

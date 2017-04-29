@@ -9,10 +9,9 @@ var isProd = (process.env.NODE_ENV === 'production');
 console.log("Production: " + isProd);
 
 let entryFill = {
+    bootstrap: ['bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/js/bootstrap.js'],
     index: ['./src/bundle/index.tsx'],
-//    login: ['./src/bundle/login.tsx'],
-//    signup: ['./src/bundle/signup.tsx'],
-    vendor: ['react', 'bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/js/bootstrap.js', 'react-dom', 'jquery', 'jquery-ui-bundle', "redux-thunk", 'redux', 'react-redux']
+    vendor: ['react', 'react-dom', 'jquery', 'jquery-ui-bundle', "redux-thunk", 'redux', 'react-redux']
 }
 if (isProd) {
     var publicPathFill = "./dist/assets/bundle";
@@ -33,7 +32,7 @@ if (isProd) {
             new webpack.optimize.UglifyJsPlugin(),
             new webpack.optimize.OccurrenceOrderPlugin(),
             //new webpack.optimize.DedupePlugin(),
-            new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+            //new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
             //new webpack.optimize.AggressiveMergingPlugin(),
             new webpack.ProvidePlugin({
                 jQuery: 'jquery',
