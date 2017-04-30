@@ -24,7 +24,6 @@ export function post(router,passport) {
         failureFlash: true // allow flash messages
     }));
 
-
     router.post('/signup', passport.authenticate('signup', { successRedirect: '/', failureRedirect: '/signup', failureFlash: false }));
 }
 
