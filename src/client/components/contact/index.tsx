@@ -10,7 +10,6 @@ const mapStateToProps = (state: any, ownProps: any) => {
         name: state.globalReducer.name,
         email: state.globalReducer.email,
         message: state.contactReducer.message,
-        helpMessage: state.contactReducer.helpMessage,
         sending: state.contactReducer.sendingMessage
     }
 }
