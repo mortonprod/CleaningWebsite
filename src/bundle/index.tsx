@@ -13,29 +13,42 @@ import { Provider, connect } from 'react-redux';
 import { createStore, bindActionCreators, applyMiddleware } from 'redux';
 import { match, Router, Route } from 'react-router';
 import { routerReducer } from 'react-router-redux'
-import { Routes, Navigation, RootReducer} from "../client/index";
-require("./utils/pageScroll");
+import { Routes, Navigation, RootReducer } from "../client/index";
+//require("./utils/pageScroll");
 //import 'bootstrap/dist/css/bootstrap.css';
 //import 'bootstrap/dist/js/bootstrap.js';
 //import "./sass/site.scss";
 //import "animate.css";
 
-document.addEventListener("DOMContentLoaded", function (event) { 
-    // Get initial state from window and configure initial state (just like the server)
-    const initial = window.__REDUX_STATE__;
-    reactDOM.render(
-        <Provider>
-            <BrowserRouter>
-                <Routes/>;
-            </BrowserRouter>
-        </Provider>,
-        document.getElementById('react-router')
-    );
-    reactDOM.render(
-        <Navigation/>,
-        document.getElementById('react-nav')
-    );
-})
+//document.addEventListener("DOMContentLoaded", function (event) { 
+// Get initial state from window and configure initial state (just like the server)
+const initial = window.__REDUX_STATE__;
+console.log("Run the app from bundle.")
+console.log(document.getElementById('react-router'));
+function Test() { return (<div>test here</div>) }
+function test2() { return (<div>test2</div>) }
+//reactDOM.render(
+//    <Provider>
+//        <BrowserRouter>
+//            <Route exact path="/" component={test} />
+//        </BrowserRouter>
+//    </Provider>,
+//    document.getElementById('react-router')
+//);
+reactDOM.render(
+    <Test/>,
+    document.getElementById('react-router')
+);
+//reactDOM.render(
+//    <div>hello</div>,
+//    document.getElementById('react-router')
+//);
+
+//reactDOM.render(
+//    <Navigation />,
+//    document.getElementById('react-nav')
+//);
+//})
 
 //if ('serviceWorker' in navigator) {
 //    navigator.serviceWorker.register('/bundle/service-worker.js').then(function (registration) {

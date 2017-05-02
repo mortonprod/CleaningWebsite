@@ -12,7 +12,9 @@ const mapStateToProps = (state: any, ownProps: any) => {
 }
 const mapDispatchToProps = (dispatch: any, ownProps: any) => {
     return {
-        sendLoginDetailsToServer: bindActionCreators(actions().sendLoginDetailsToServer, dispatch)
+        sendLoginDetailsToServer: bindActionCreators(actions().sendLoginDetailsToServer, dispatch),
+        sendSignupDetailsToServer: bindActionCreators(actions().sendSignupDetailsToServer, dispatch)
+
     }
 }
 let LoginConnect = connect(mapDispatchToProps, mapDispatchToProps)(Login);

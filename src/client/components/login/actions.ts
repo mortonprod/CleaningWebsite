@@ -16,9 +16,11 @@ export default function actions() {
             setError: "SET_ERROR"
         }
     }
-    function sendLoginDetailsToServer(email: string, password: string) {
+    function sendLoginDetailsToServer(form: { email: string, password: string }) {
+        let email = form.email;
+        let password = form.password;
         return (dispatch: any) => {
-            console.log("Send to server");
+            console.log("Send Login");
             dispatch(sending(true));
             $.ajax({
                 type: 'POST',
@@ -37,9 +39,27 @@ export default function actions() {
                 addError("Error sending to server");
             });
         }
-
     }
-
+    function sendSignupDetailsToServer(form: { firstname: string, secondName: string; address: string; password: string; phoneNumber: string; email: string }) {
+        return (dispatch: Function) => {
+            console.log("Send Signup")
+            dispatch(sending(true));
+            $.ajax({
+                type: 'POST',
+                url: '/signup',
+                data: form
+            }).done(function (data) {
+                dispatch(sending(false));
+                if (data.error) {
+                    addError(data.error);
+                } else {
+                }
+            }).fail(function (a, b, c, d) {
+                dispatch(sending(false));
+                addError("Error sending to server");
+            })
+        };
+    }
     function sending(bool: Boolean) {
         return {
             type: names().setSending,
@@ -54,9 +74,9 @@ export default function actions() {
         }
     }
     return {
-        names,
         sendLoginDetailsToServer,
+        sendSignupDetailsToServer,
         sending,
-        addError
+        names
     }
 }

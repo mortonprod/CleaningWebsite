@@ -22,10 +22,12 @@ export function pages(router) {
                 </StaticRouter>
             </Provider>
         )
+        //const nav = ReactDOMServer.renderToString(
+        //    <Navigation/>
+        //)
         const nav = ReactDOMServer.renderToString(
-            <Navigation/>
+            <div> Nav</div>
         )
-
         console.log("Body:");
         console.log(body);
         //const state = store.getState()
@@ -39,7 +41,6 @@ export function pages(router) {
                   <title>Clement Cleaning</title>
                   <meta name="description" content="A cleaning business">
                   <meta name="author" content="Mortonproductions">
-                  <script src="/bundle/bootstrap.js"></script>
                   <link rel="stylesheet" href="/bundle/site.css">
                 </head>
                 <body>
@@ -52,16 +53,14 @@ export function pages(router) {
                     </h2>
                   </header>
                   <nav>
-                    <div id="react-nav">${nav}</div>
                   </nav>
+                  <div id="react-router"></div>
                   <section>
-                    <div id="react-router">${body}</div>
                   </section>
                   <footer>
                      Progressive web app produced my morton productions 
                   </footer>
                   <script>window.__REDUX_STATE__ = ${JSON.stringify(state)}</script>
-                  <script src="/bundle/vendor.bundle.js"></script>
                   <script src="/bundle/index.js"></script>
                 </body>
                 </html>`

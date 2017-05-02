@@ -1,5 +1,6 @@
 ﻿import { config } from "../config";
 const http2 = require('http2');
+import * as http from "http";
 import * as express from 'express';
 import * as path from 'path'
 import * as cookieParser from 'cookie-parser';
@@ -16,9 +17,13 @@ db.once('open', function () {
     let passport = require("./passport");
     console.log("Add middleware...");
     let app = express();
-    require('express-http2-workaround')({ express: express, http2: http2, app: app });///Fix http2 and express compatibility.
+    if (process.env.NODE_ENV === 'production') {
+        require('express-http2-workaround')({ express: express, http2: http2, app: app });///Fix http2 and express compatibility.
+    }
     let st = [__dirname, ...config.staticLocation]
-    app.use(express.static(path.join(...st)));
+    if (process.env.NODE_ENV === 'production') {
+        app.use(express.static(path.join(...st)));
+    }
     let sessionOpts = {
         saveUninitialized: true, // saved new sessions
         resave: false, // do not automatically write to the session store
@@ -47,12 +52,23 @@ db.once('open', function () {
         key: fs.readFileSync(config.ssl.key),
         cert: fs.readFileSync(config.ssl.cert)
     };
-    http2.createServer(options, app).listen(config.port, (error) => {
-        if (error) {
-            console.error(error)
-            return process.exit(1)
-        } else {
-            console.log('Listening on port: ' + config.port + '.')
-        }
-    });
+    if (process.env.NODE_ENV === 'production') {
+        http2.createServer(options, app).listen(config.port, (error) => {
+            if (error) {
+                console.error(error)
+                return process.exit(1)
+            } else {
+                console.log('Listening on port: ' + config.port + '.')
+            }
+        });
+    } else {
+        http.createServer(app).listen(config.port, (error) => {
+            if (error) {
+                console.error(error)
+                return process.exit(1)
+            } else {
+                console.log('Listening on port: ' + config.port + '.')
+            }
+        });
+    }
 });

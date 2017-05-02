@@ -8,13 +8,16 @@ let getPlugins;
 var isProd = (process.env.NODE_ENV === 'production');
 console.log("Production: " + isProd);
 
-let entryFill = {
-    bootstrap: ['bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/js/bootstrap.js'],
-    index: ['./src/bundle/index.tsx'],
-    vendor: ['react', 'react-dom', 'jquery', 'jquery-ui-bundle', "redux-thunk", 'redux', 'react-redux']
-}
+let entryFill = null;
+let publicPathFill = null;
 if (isProd) {
-    var publicPathFill = "./dist/assets/bundle";
+    entryFill = {
+        //bootstrap: ['bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/js/bootstrap.js'],
+        index: ['./src/bundle/index.tsx'],
+        vendor: ['react', 'react-dom', 'jquery', 'jquery-ui-bundle', "redux-thunk", 'redux', 'react-redux']
+    }
+
+    publicPathFill = "./dist/assets/bundle";
     getPlugins = function () {
         return [
             new SWPrecacheWebpackPlugin(
@@ -28,6 +31,11 @@ if (isProd) {
                     }],
                 }
             ),
+            new webpack.DefinePlugin({
+                'process.env': {
+                    'NODE_ENV': JSON.stringify('production')
+                }
+            }),
             new ExtractTextPlugin("site.css"),
             new webpack.optimize.UglifyJsPlugin(),
             new webpack.optimize.OccurrenceOrderPlugin(),
@@ -49,11 +57,27 @@ if (isProd) {
         ]
     }
 } else {
-    var publicPathFill = "/bundle/";
+    entryFill = {
+        //bootstrap: ['bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/js/bootstrap.js', 'webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8081'],
+        index: ['./src/bundle/index.tsx', 'webpack/hot/dev-server', 'webpack-dev-server/client?http://localhost:8081']
+        //vendor: ['react', 'react-dom', 'jquery', 'jquery-ui-bundle', "redux-thunk", 'redux', 'react-redux']
+    }
+
+    //publicPathFill =  "http://localhost:8081/bundle/",
+    publicPathFill = "/",
+
     getPlugins = function () {
         return [
             new ExtractTextPlugin("site.css"),
-            //new Webpack.HotModuleReplacementPlugin()
+            new webpack.DefinePlugin({
+                'process.env.NODE_ENV': JSON.stringify('development')
+            }),
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.ProvidePlugin({
+                jQuery: 'jquery',
+                $: 'jquery',
+                jquery: 'jquery'
+            })
         ]
     }
 
@@ -70,8 +94,8 @@ module.exports = {
     output: {
         path: publicPathFill,
         filename: '[name].js',
-        libraryTarget: 'umd'
-        //publicPath: publicPathFill
+        libraryTarget: 'umd',
+        publicPath: 'http://localhost:8081/bundle/'
     },
     resolve: {
         extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],

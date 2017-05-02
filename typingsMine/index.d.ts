@@ -26,6 +26,7 @@ interface IGlobal {
             second: string
         },
         email: string,
+        password: string,
         address: string,
         phoneNumber: string,
         datesAndTimes: any,
