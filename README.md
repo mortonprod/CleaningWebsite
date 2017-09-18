@@ -1,54 +1,40 @@
-﻿# A cleaning business
+# Cleaning-website
 
-A cleaning business based in Glasgow. The website has isomorphic react front end with node backend. 
+This is a react review component. It displays props as users reviews.
 
-The website can be used as a template if you so wish   
+## Installation
+To install this component into your project run:
 
-## Getting Started
-
-
-
-```
-git clone https://github.com/mortonprod/CleaningWebsite
-npm install
-``` 
-
-### Prerequisites
-
-You will need github and node installed. For smoothtransition jquery must be older than 3.0 ajax.success not a function anymore.
+`npm install @mortonprod/cleaning-website`
 
 
-### Installing
+## Usage
+
+Import the component like so:
+
+`
+import Product from @mortonprod/cleaning-website
+`
 
 
-## Running the tests
-
-The tests are run with jest
-
-### The tests for each component
-
-These test
-
-```
-npm jest
-```
+then import the css:
 
 
-## Deployment
+`
+import @mortonprod/cleaning-website/dist/index.css
+` 
 
-The website has been deployed with docker
-
-## Built With
-
-* [React](https://facebook.github.io/react/) - The frontend framework
+Note you must pull the css independently of the component. 
 
 
-## Authors
+To run in development mode do:
 
-* **Alexander Morton**  [github home](https://github.com/mortonprod/CleaningWebsite)
+`
+npm run start
+`
 
-## License
+This will run the app on localhost:8080.
 
-No licence but let me know how your using it for my own interest
+## Contributing
 
-	
+You are free to contribute to this component if you wish.

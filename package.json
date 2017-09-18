@@ -12,6 +12,7 @@
   "scripts": {
     "test": "jest",
     "start": "node dist/src/server/index.js",
+		"build":"webpack -p",
     "startdebug": "devtool dist/src/server/index.js"
   },
   "dependencies": {
