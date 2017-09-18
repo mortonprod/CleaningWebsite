@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ce2098dc-ddec-464f-a5f4-35659ade6b9f}</ProjectGuid>
+    <ProjectHome />
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartupFile>gulpfile.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <TypeScriptJSXEmit>react</TypeScriptJSXEmit>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <EnableTypeScript>true</EnableTypeScript>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include=".dockerignore" />
+    <Content Include="connect.sh" />
+    <Content Include="db\Dockerfile" />
+    <Content Include="docker-compose-ssl.yml" />
+    <Content Include="docker-compose-localssl.yml" />
+    <Content Include="docker-compose.yml" />
+    <Content Include="Dockerfile">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="manifest.webmanifest" />
+    <Content Include="nginx\Dockerfile">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="nginx\nginx.conf" />
+    <Content Include="package.json" />
+    <Content Include="react-hot\src\app.scss" />
+    <Content Include="react-hot\src\App.tsx" />
+    <Content Include="react-hot\src\comp\introduction.tsx" />
+    <Content Include="react-hot\src\Counter.tsx" />
+    <Content Include="react-hot\src\index.tsx" />
+    <Content Include="react-hot\src\svg\build.svg" />
+    <Content Include="README.md" />
+    <Content Include="run.sh" />
+    <Content Include="serverDev\index.js.map" />
+    <Content Include="serverDev\npm-debug.log" />
+    <Content Include="serverDev\npm-debug.log.87174762" />
+    <Content Include="serverDev\tsconfig.json" />
+    <Content Include="src\favicon.png" />
+    <Content Include="src\bundle\images\broomCrop.png" />
+    <Content Include="src\bundle\images\mudCrop.png" />
+    <Content Include="src\bundle\index.tsx" />
+    <Content Include="src\bundle\login.tsx" />
+    <Content Include="src\bundle\sass\site.scss" />
+    <Content Include="src\bundle\signup.tsx" />
+    <Content Include="src\bundle\tsconfig.json" />
+    <Content Include="src\client\components\contact\comp\contactPresentation.tsx" />
+    <Content Include="src\client\components\contact\comp\index.tsx" />
+    <Content Include="src\client\components\datetime\comp\index.tsx" />
+    <Content Include="src\client\components\login\comp\index.tsx" />
+    <Content Include="src\client\components\login\comp\loginPresentation.tsx" />
+    <Content Include="src\client\components\reviews\comp\index.tsx" />
+    <Content Include="src\client\components\reviews\comp\reviewsPresentation.tsx" />
+    <Content Include="src\client\components\signup\index.tsx" />
+    <Content Include="src\client\components\signup\signupPresentation.tsx" />
+    <Content Include="src\client\index.tsx" />
+    <Content Include="src\client\tsconfig.json" />
+    <Content Include="src\server\tsconfig.json" />
+    <Compile Include="gulpfile.js" />
+    <Compile Include="serverDev\index.js" />
+    <Compile Include="webpack.config.js" />
+    <Content Include="typings.json" />
+    <TypeScriptCompile Include="react-hot\src\colors.ts" />
+    <TypeScriptCompile Include="react-hot\src\comp\list.tsx" />
+    <TypeScriptCompile Include="serverDev\index.ts" />
+    <TypeScriptCompile Include="src\bundle\utils\pageScroll.ts" />
+    <TypeScriptCompile Include="src\bundle\utils\smoothTransition.ts" />
+    <TypeScriptCompile Include="src\client\components\contact\actions.ts" />
+    <TypeScriptCompile Include="src\client\components\contact\index.tsx" />
+    <TypeScriptCompile Include="src\client\components\contact\reducer.ts" />
+    <TypeScriptCompile Include="src\client\components\datetime\actions.ts" />
+    <TypeScriptCompile Include="src\client\components\datetime\index.tsx" />
+    <TypeScriptCompile Include="src\client\components\datetime\reducer.ts" />
+    <TypeScriptCompile Include="src\client\components\globalActions.ts" />
+    <TypeScriptCompile Include="src\client\components\login\actions.ts" />
+    <TypeScriptCompile Include="src\client\components\index.tsx" />
+    <TypeScriptCompile Include="src\client\components\login\index.ts" />
+    <TypeScriptCompile Include="src\client\components\login\reducer.ts" />
+    <TypeScriptCompile Include="src\client\components\reducer.ts" />
+    <TypeScriptCompile Include="src\client\components\reviews\actions.ts" />
+    <TypeScriptCompile Include="src\client\components\reviews\index.tsx" />
+    <TypeScriptCompile Include="src\client\components\reviews\reducer.ts" />
+    <TypeScriptCompile Include="src\config.ts" />
+    <TypeScriptCompile Include="src\server\dbStore.ts" />
+    <TypeScriptCompile Include="src\server\index.ts" />
+    <TypeScriptCompile Include="src\server\passport.ts" />
+    <Content Include="src\server\pug\old\contact.pug" />
+    <Content Include="src\server\pug\old\dateTime.pug" />
+    <Content Include="src\server\pug\old\footer.pug" />
+    <Content Include="src\server\pug\old\header.pug" />
+    <Content Include="src\server\pug\index\index.pug" />
+    <Content Include="src\server\pug\index.pug" />
+    <Content Include="src\server\pug\old\login.pug" />
+    <Content Include="src\server\pug\old\nav.pug" />
+    <Content Include="src\server\pug\old\review.pug" />
+    <Content Include="src\server\pug\old\signup.pug" />
+    <TypeScriptCompile Include="src\server\routes\index.ts" />
+    <TypeScriptCompile Include="src\server\routes\pages.tsx" />
+    <TypeScriptCompile Include="src\server\routes\post.ts" />
+    <TypeScriptCompile Include="typingsMine\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="db\" />
+    <Folder Include="db\store\" />
+    <Folder Include="nginx\" />
+    <Folder Include="react-hot\" />
+    <Folder Include="react-hot\src\" />
+    <Folder Include="react-hot\src\comp\" />
+    <Folder Include="react-hot\src\svg\" />
+    <Folder Include="serverDev\" />
+    <Folder Include="src\bundle\" />
+    <Folder Include="src\bundle\images\" />
+    <Folder Include="src\bundle\sass\" />
+    <Folder Include="src\bundle\utils\" />
+    <Folder Include="src\client\components\contact\" />
+    <Folder Include="src\client\components\contact\comp\" />
+    <Folder Include="src\client\components\datetime\" />
+    <Folder Include="src\client\components\datetime\comp\" />
+    <Folder Include="src\client\components\login\" />
+    <Folder Include="src\client\components\login\comp\" />
+    <Folder Include="src\client\components\reviews\comp\" />
+    <Folder Include="src\client\components\reviews\" />
+    <Folder Include="src\client\components\signup\" />
+    <Folder Include="src\server\pug\" />
+    <Folder Include="src\server\pug\index\" />
+    <Folder Include="src\server\pug\old\" />
+    <Folder Include="ssl\" />
+    <Folder Include="typingsMine\" />
+    <Folder Include="src" />
+    <Folder Include="src\client" />
+    <Folder Include="src\client\components" />
+    <Folder Include="src\server" />
+    <Folder Include="src\server\routes" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

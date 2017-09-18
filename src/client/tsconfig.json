@@ -1,0 +1,27 @@
+﻿{
+  "files": [
+    "./index.tsx",
+    "../../typings/index.d.ts",
+    "../../typingsMine/index.d.ts"
+  ],
+  "compilerOptions": {
+    "removeComments": true,
+    "noImplicitAny": false,
+    "target": "es5",
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "lib": [ "es2015", "es2016", "es2017", "dom", "es2017.object" ] //So we have object.assign typings. Does not add polyfill
+  },
+  "include": [
+    "./*",
+    "./**/*.ts",
+    "./**/*.tsx"
+  ],
+
+  "exclude": [
+    "node_modules",
+    "./__tests__",
+    "*-spec*"
+  ]
+}

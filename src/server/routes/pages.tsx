@@ -1,68 +1,69 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
+﻿/// <reference path="../../client/components/contact/index.tsx" />
 import * as React from 'react'
 import * as ReactDOMServer from 'react-dom/server'
-import { renderFile } from 'pug';
 import { Provider } from 'react-redux';
+import { match, Router, Route, StaticRouter } from 'react-router';
+import { createStore, bindActionCreators, applyMiddleware } from 'redux';
+import { routerReducer } from 'react-router-redux'
+import  thunkMiddleware  from 'redux-thunk'
 import * as path from 'path'
+import * as fs from "fs";
+import { Routes, Navigation, RootReducer } from "../../client/index";
 
-import store from "../../client/reducers/index";
-import { addName, addEmail } from "../../client/actions/userAction"
-import Contact from "../../client/containers/contact";
-import Login from "../../client/containers/login";
-import Signup from "../../client/containers/signup";
-
-
-
-const contactApp = (
-<Provider store={ store() } >
-    <Contact/>
-</Provider> 
-)
-
-const loginApp = (
-    <Provider store={store()} >
-        <Login/>
-    </Provider>
-)
-
-const signupApp = (
-    <Provider store={store()} >
-        <Signup/>
-    </Provider>
-)
 export function pages(router) {
-    router.get('/', function (req: any, res: any) {
-        if (req && req.session && req.session.passport && req.session.passport.user) {
-            store().dispatch(addName(req.session.passport.user.name))
-            store().dispatch(addEmail(req.session.passport.user.email))
-        }
-        let preloadedState = store().getState();
-        let contactString = ReactDOMServer.renderToString(contactApp);
-        let locals = null;
-        if (preloadedState.userReducer.name !=="") {
-            locals = { name: preloadedState.userReducer.name, contact: contactString, preloadedState: preloadedState };
-        } else {
-            locals = { contact: contactString, preloadedState: preloadedState };
-        }
-        let html = renderFile(path.join(__dirname, "..", "pug/index.pug"), locals);
-        res.send(html);
-    });
-    router.get('/login', function (req: any, res: any) {
-        let preloadedState = store().getState();
-        let loginString = ReactDOMServer.renderToString(loginApp);
-        let locals = { login: loginString, preloadedState: preloadedState };
-        let html = renderFile(path.join(__dirname, "..", "pug/login.pug"), locals);
-        res.send(html);
-    });
-    router.get('/logout', function (req: any, res: any) {
-        req.logout();
-        res.redirect("/");
-    });
-    router.get('/signup', function (req, res) {
-        let preloadedState = store().getState();
-        let signupString = ReactDOMServer.renderToString(signupApp);
-        let locals = { signup: signupString, preloadedState: preloadedState };
-        let html = renderFile(path.join(__dirname, "..", "pug/signup.pug"), locals);
-        res.send(html);
+
+    router.get('/*', function (req: any, res: any, next) {
+        let initial = {};
+        const store = createStore(RootReducer, initial, applyMiddleware(thunkMiddleware))
+        const body = ReactDOMServer.renderToString(
+            <Provider store={store}>
+                <StaticRouter location={req.url}>
+                    <Routes/>
+                </StaticRouter>
+            </Provider>
+        )
+        //const nav = ReactDOMServer.renderToString(
+        //    <Navigation/>
+        //)
+        const nav = ReactDOMServer.renderToString(
+            <div> Nav</div>
+        )
+        console.log("Body:");
+        console.log(body);
+        //const state = store.getState()
+        const state = {};
+        res.send(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+                  <title>Clement Cleaning</title>
+                  <meta name="description" content="A cleaning business">
+                  <meta name="author" content="Mortonproductions">
+                  <link rel="stylesheet" href="/bundle/site.css">
+                </head>
+                <body>
+                  <header>
+                    <h1>
+                        Clement Cleaning
+                    </h1>
+                    <h2>
+                        A cleaning business based in Loch Lomond
+                    </h2>
+                  </header>
+                  <nav>
+                  </nav>
+                  <div id="react-router"></div>
+                  <section>
+                  </section>
+                  <footer>
+                     Progressive web app produced my morton productions 
+                  </footer>
+                  <script>window.__REDUX_STATE__ = ${JSON.stringify(state)}</script>
+                  <script src="/bundle/index.js"></script>
+                </body>
+                </html>`
+        )
     });
 }

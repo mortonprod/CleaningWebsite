@@ -1,0 +1,27 @@
+﻿{
+  "files": [
+    "index.ts",
+    "../config.ts",
+    "../client/components/index",
+    "../../typings/index.d.ts",
+    "../../typingsMine/index.d.ts"
+  ],
+  "compilerOptions": {
+    "removeComments": true,
+    "noImplicitAny": false,
+    "target": "es5",
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+    "lib": [ "es5","es6","dom","es2017.object"] 
+  },
+  "include": [
+    "./*",
+    "./**/*.ts",
+    "./**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,17 +1,16 @@
-﻿/// <reference path="../../../typings/index.d.ts" />
-import * as nodemailer from 'nodemailer'
-import  global  from "../config/global";
+﻿import * as nodemailer from 'nodemailer'
+import { config }  from "../../config";
 export function post(router,passport) {
 
     router.post('/contact', function (req, res) {
         console.log("Contact information " + req.body.name + "   " + req.body.email + "   " + req.body.message);
         var transporter = nodemailer.createTransport({
             service: 'Gmail',
-            auth: global().mail
+            auth: config.mail
         });
-        global().mailOptions.subject = 'Cleaning customer ' + req.body.name;
-        global().mailOptions.text = req.body.message + "\n" + "From: " + req.body.email;
-        transporter.sendMail(global().mailOptions, function (error, info) {
+        config.mailOptions.subject = 'Cleaning customer ' + req.body.name;
+        config.mailOptions.text = req.body.message + "\n" + "From: " + req.body.email;
+        transporter.sendMail(config.mailOptions, function (error, info) {
 ///            res.redirect("/");
         });
     });
@@ -24,7 +23,6 @@ export function post(router,passport) {
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
-
 
     router.post('/signup', passport.authenticate('signup', { successRedirect: '/', failureRedirect: '/signup', failureFlash: false }));
 }
